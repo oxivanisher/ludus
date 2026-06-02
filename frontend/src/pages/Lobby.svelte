@@ -207,3 +207,9 @@
     </div>
   {/if}
 {/if}
+
+{#if stats?.git_commit}
+  <p class="mt-16 text-xs text-gray-300 dark:text-gray-700 font-mono">
+    {stats.git_commit.slice(0, 7)}
+  </p>
+{/if}

@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     vapid_public_key: str = ""
     vapid_contact_email: str = "admin@example.com"
 
+    git_commit: str = "dev"
+
     @property
     def session_ttl(self) -> int:
         return self.session_ttl_days * 86400

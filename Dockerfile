@@ -12,6 +12,7 @@ WORKDIR /app
 
 ARG UID=1000
 ARG GID=1000
+ARG GIT_COMMIT=dev
 
 RUN pip install uv --quiet
 
@@ -27,6 +28,7 @@ RUN groupadd -g "${GID}" ludus \
     && useradd -u "${UID}" -g "${GID}" -s /bin/sh -M ludus \
     && chown -R "${UID}:${GID}" /app
 
+ENV GIT_COMMIT=${GIT_COMMIT}
 USER ${UID}:${GID}
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

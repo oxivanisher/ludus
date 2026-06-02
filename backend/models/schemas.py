@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class StatsResponse(BaseModel):
     active_games: int
     total_games: int
+    git_commit: str = "dev"
 
 
 class GameInfo(BaseModel):

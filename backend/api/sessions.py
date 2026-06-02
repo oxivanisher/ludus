@@ -3,6 +3,7 @@ import json
 from fastapi import APIRouter, Header, HTTPException
 
 from core import connections, session as session_store
+from core.config import settings
 from core.plugin_loader import list_games
 from models.schemas import (
     ActionRequest,
@@ -24,7 +25,9 @@ def _require_token(x_player_token: str | None) -> str:
 
 @router.get("/stats", response_model=StatsResponse)
 async def get_stats():
-    return await session_store.get_stats()
+    stats = await session_store.get_stats()
+    stats["git_commit"] = settings.git_commit
+    return stats
 
 
 @router.get("/sessions/public", response_model=list[SessionResponse])

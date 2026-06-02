@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -8,12 +9,17 @@ from fastapi.responses import FileResponse
 from api.push import router as push_router
 from api.sessions import router as sessions_router
 from api.websocket import router as ws_router
+from core.config import settings
 from core.plugin_loader import load_plugins
 from core.redis_client import close_redis
+
+logger = logging.getLogger("ludus")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    logging.basicConfig(level=logging.INFO)
+    logger.info("Ludus starting — commit %s", settings.git_commit)
     load_plugins()
     yield
     await close_redis()

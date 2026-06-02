@@ -7,6 +7,7 @@ services:
       args:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
+        GIT_COMMIT: ${GIT_COMMIT:-dev}
     user: "${UID:-1000}:${GID:-1000}"
     restart: unless-stopped
     environment:
