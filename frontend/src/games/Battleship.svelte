@@ -277,7 +277,8 @@
             <button
               class="w-6 h-6 transition-colors {cell.cls}"
               aria-label="Row {cell.row + 1}, column {cell.col + 1}"
-              onpointerenter={() => { hoverCell = [cell.row, cell.col]; }}
+              onmouseenter={() => { hoverCell = [cell.row, cell.col]; }}
+              ontouchstart={() => { hoverCell = [cell.row, cell.col]; }}
               onclick={() => handlePlacementClick(cell.row, cell.col)}
             ></button>
           {/each}

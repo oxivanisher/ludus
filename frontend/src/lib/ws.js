@@ -46,7 +46,13 @@ export function createGameSocket(sessionId, { onState, onError, onCancelled }) {
 
   return {
     sendAction(action) {
-      ws.send(JSON.stringify({ type: "action", action }));
+      const msg = JSON.stringify({ type: "action", action });
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(msg);
+      } else if (ws.readyState === WebSocket.CONNECTING) {
+        ws.addEventListener("open", () => ws.send(msg), { once: true });
+      }
+      // CLOSING / CLOSED: drop — the reconnect loop restores the connection
     },
     close() {
       dead = true;

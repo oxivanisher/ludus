@@ -151,16 +151,18 @@ async def apply_action(session_id: str, player_token: str, action: dict) -> dict
         session["status"] = "finished"
         session["current_turn"] = None
     else:
-        if "current_turn" in session["state"]:
-            session["current_turn"] = session["state"]["current_turn"]
+        game_state_turn = session["state"].get("current_turn")
+        if game_state_turn is not None:
+            session["current_turn"] = game_state_turn
         else:
             players_list = [p["username"] for p in session["players"]]
             current_idx = players_list.index(username)
             session["current_turn"] = players_list[(current_idx + 1) % len(players_list)]
         next_username = session["current_turn"]
-        next_player_token = next(
-            p["token"] for p in session["players"] if p["username"] == next_username
-        )
+        if next_username is not None:
+            next_player_token = next(
+                p["token"] for p in session["players"] if p["username"] == next_username
+            )
 
     await save_session(session)
 
