@@ -24,8 +24,8 @@ def main() -> None:
         serialization.PublicFormat.UncompressedPoint,
     )
     print("Add these to your .env file:\n")
-    print(f"VAPID_PRIVATE_KEY={b64urlencode(private_der).decode()}")
-    print(f"VAPID_PUBLIC_KEY={b64urlencode(public_raw).decode()}")
+    print(f"VAPID_PRIVATE_KEY={b64urlencode(private_der)}")
+    print(f"VAPID_PUBLIC_KEY={b64urlencode(public_raw)}")
 
 
 if __name__ == "__main__":

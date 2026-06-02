@@ -5,6 +5,7 @@ export function createGameSocket(sessionId, { onState, onError, onCancelled }) {
   const url = `${protocol}://${location.host}/ws/${sessionId}?token=${encodeURIComponent(getToken())}`;
   let ws;
   let dead = false;
+  let paused = false;
   let reconnectTimer = null;
 
   function connect() {
@@ -20,12 +21,27 @@ export function createGameSocket(sessionId, { onState, onError, onCancelled }) {
     };
 
     ws.onclose = () => {
-      if (!dead) reconnectTimer = setTimeout(connect, 2000);
+      if (!dead && !paused) reconnectTimer = setTimeout(connect, 2000);
     };
 
     ws.onerror = () => ws.close();
   }
 
+  // Disconnect when the page is hidden (screen locked, tab backgrounded) so the
+  // server unregisters presence and sends a push notification on the next turn.
+  // Reconnect when the page becomes visible again to resume live updates.
+  function handleVisibility() {
+    if (document.hidden) {
+      paused = true;
+      clearTimeout(reconnectTimer);
+      ws.close();
+    } else {
+      paused = false;
+      connect();
+    }
+  }
+
+  document.addEventListener("visibilitychange", handleVisibility);
   connect();
 
   return {
@@ -35,6 +51,7 @@ export function createGameSocket(sessionId, { onState, onError, onCancelled }) {
     close() {
       dead = true;
       clearTimeout(reconnectTimer);
+      document.removeEventListener("visibilitychange", handleVisibility);
       ws.close();
     },
   };
