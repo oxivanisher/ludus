@@ -217,28 +217,6 @@
     onAction({ type: 'fire', row, col });
   }
 
-  // Pointer-event handlers for the placement grid.
-  // onpointerenter fires for mouse hover and initial touch contact.
-  // onpointermove + elementFromPoint tracks the finger as it drags across cells.
-  // onpointerup fires on release for both mouse click and touch lift — no ghost
-  // click possible because we never use onclick for placement.
-
-  function cellFromPoint(x, y) {
-    const el = document.elementFromPoint(x, y);
-    const r = el?.dataset.row, c = el?.dataset.col;
-    return r !== undefined && c !== undefined ? [+r, +c] : null;
-  }
-
-  function handleGridPointerMove(e) {
-    if (e.pointerType === 'mouse') return; // mouse hover handled by onpointerenter
-    const cell = cellFromPoint(e.clientX, e.clientY);
-    if (cell) hoverCell = cell;
-  }
-
-  function handleGridPointerUp(e) {
-    if (e.button !== 0) return; // ignore right- / middle-click
-    if (hoverCell) handlePlacementClick(hoverCell[0], hoverCell[1]);
-  }
 </script>
 
 <div class="select-none">
@@ -293,19 +271,14 @@
         <!-- Placement grid -->
         <div
           class="grid grid-cols-10 gap-[2px] bg-sky-300 dark:bg-sky-700 border-2 border-sky-300 dark:border-sky-700 w-fit"
-          role="grid"
-          aria-label={$_('games.battleship.place_your_fleet')}
-          onpointerleave={() => { hoverCell = null; }}
-          onpointermove={handleGridPointerMove}
-          onpointerup={handleGridPointerUp}
+          onmouseleave={() => { hoverCell = null; }}
         >
           {#each placementCells as cell}
             <button
               class="w-6 h-6 transition-colors {cell.cls}"
               aria-label="Row {cell.row + 1}, column {cell.col + 1}"
-              data-row={cell.row}
-              data-col={cell.col}
               onpointerenter={() => { hoverCell = [cell.row, cell.col]; }}
+              onclick={() => handlePlacementClick(cell.row, cell.col)}
             ></button>
           {/each}
         </div>
