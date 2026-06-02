@@ -216,6 +216,38 @@
     if (!isMyTurn || myShotMap[`${row},${col}`] !== undefined) return;
     onAction({ type: 'fire', row, col });
   }
+
+  // Touch support for placement grid.
+  // touchmove stays on the element where touchstart fired, so we use
+  // elementFromPoint to find the actual cell under the finger.
+  let lastTouchEnd = 0;
+
+  function cellFromTouch(touch) {
+    const el = document.elementFromPoint(touch.clientX, touch.clientY);
+    const r = el?.dataset.row, c = el?.dataset.col;
+    return r !== undefined && c !== undefined ? [+r, +c] : null;
+  }
+
+  function handleGridTouchStart(e) {
+    const cell = cellFromTouch(e.touches[0]);
+    if (cell) hoverCell = cell;
+  }
+
+  function handleGridTouchMove(e) {
+    const cell = cellFromTouch(e.touches[0]);
+    if (cell) hoverCell = cell;
+  }
+
+  function handleGridTouchEnd(e) {
+    lastTouchEnd = Date.now();
+    if (hoverCell) handlePlacementClick(hoverCell[0], hoverCell[1]);
+  }
+
+  // Suppress the ghost click browsers fire ~300ms after touchend.
+  function handleCellClick(row, col) {
+    if (Date.now() - lastTouchEnd < 500) return;
+    handlePlacementClick(row, col);
+  }
 </script>
 
 <div class="select-none">
@@ -269,15 +301,20 @@
 
         <!-- Placement grid -->
         <div
-          class="grid grid-cols-10 gap-[2px] bg-sky-300 dark:bg-sky-700 border-2 border-sky-300 dark:border-sky-700 w-fit"
+          class="grid grid-cols-10 gap-[2px] bg-sky-300 dark:bg-sky-700 border-2 border-sky-300 dark:border-sky-700 w-fit touch-none"
           onmouseleave={() => { hoverCell = null; }}
+          ontouchstart={handleGridTouchStart}
+          ontouchmove={handleGridTouchMove}
+          ontouchend={handleGridTouchEnd}
         >
           {#each placementCells as cell}
             <button
               class="w-6 h-6 transition-colors {cell.cls}"
               aria-label="Row {cell.row + 1}, column {cell.col + 1}"
+              data-row={cell.row}
+              data-col={cell.col}
               onmouseenter={() => { hoverCell = [cell.row, cell.col]; }}
-              onclick={() => handlePlacementClick(cell.row, cell.col)}
+              onclick={() => handleCellClick(cell.row, cell.col)}
             ></button>
           {/each}
         </div>
