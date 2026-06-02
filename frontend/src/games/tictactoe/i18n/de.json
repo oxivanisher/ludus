@@ -1,0 +1,10 @@
+{
+  "games": {
+    "tictactoe": {
+      "name": "Tic-Tac-Toe",
+      "description": "Klassisches 3×3 Raster. Wer drei in eine Reihe bringt, gewinnt.",
+      "legend_label": "{name} = {mark}",
+      "how_to_play": "Spieler setzen abwechselnd ihr Zeichen (X oder O) auf das 3×3 Raster.\nWer als Erster 3 in einer Reihe hat — waagrecht, senkrecht oder diagonal — gewinnt.\nSind alle 9 Felder belegt und niemand hat gewonnen, endet das Spiel unentschieden."
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "games": {
+    "tictactoe": {
+      "name": "Tic-Tac-Toe",
+      "description": "Classic 3×3 grid. Get three in a row to win.",
+      "legend_label": "{name} = {mark}",
+      "how_to_play": "Players take turns placing their mark (X or O) on the 3×3 grid.\nThe first player to get 3 in a row — horizontally, vertically, or diagonally — wins.\nIf all 9 squares are filled and nobody has won, the game is a draw."
+    }
+  }
+}

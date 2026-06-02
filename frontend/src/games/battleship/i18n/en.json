@@ -1,0 +1,28 @@
+{
+  "games": {
+    "battleship": {
+      "name": "Battleship",
+      "description": "Place your fleet and sink the enemy ships.",
+      "place_your_fleet": "Place Your Fleet",
+      "waiting_opponent_placement": "Fleet placed! Waiting for opponent…",
+      "your_turn_fire": "Your turn — pick a target!",
+      "waiting_for_fire": "Waiting for opponent to fire…",
+      "enemy_waters": "Enemy Waters",
+      "your_fleet": "Your Fleet",
+      "ships_to_place": "Ships to place",
+      "all_placed": "All ships placed",
+      "ship_battleship": "Battleship",
+      "ship_cruiser": "Cruiser",
+      "ship_submarine": "Submarine",
+      "ship_destroyer": "Destroyer",
+      "horizontal": "H",
+      "vertical": "V",
+      "sunk_enemy": "Enemy sunk",
+      "sunk_yours": "Yours sunk",
+      "how_to_play": "Place your fleet of 10 ships on the 10×10 grid: 1 Battleship (4 cells), 2 Cruisers (3), 3 Destroyers (2), 4 Submarines (1).\nShips cannot touch each other, not even diagonally.\nClick a placed ship to remove and reposition it.\nTake turns firing at your opponent's grid — a hit earns an extra shot, keep firing until you miss!\nSink all 10 enemy ships to win.",
+      "remove_hint": "Click a placed ship to remove it.",
+      "error_out_of_bounds": "Ship goes outside the grid.",
+      "error_touching": "Ships cannot touch each other."
+    }
+  }
+}

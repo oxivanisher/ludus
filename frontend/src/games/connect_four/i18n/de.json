@@ -1,0 +1,10 @@
+{
+  "games": {
+    "connect_four": {
+      "name": "Vier gewinnt",
+      "description": "Wirf Steine ins Raster. Wer zuerst vier in einer Reihe hat, gewinnt.",
+      "you_label": "(du)",
+      "how_to_play": "Spieler werfen abwechselnd einen Stein in eine der 7 Spalten.\nSteine fallen auf den untersten freien Platz in der Spalte.\nWer zuerst 4 Steine in einer Reihe verbindet — waagrecht, senkrecht oder diagonal — gewinnt.\nIst das Raster voll ohne Gewinner, endet das Spiel unentschieden."
+    }
+  }
+}

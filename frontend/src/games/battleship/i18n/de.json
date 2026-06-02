@@ -1,0 +1,28 @@
+{
+  "games": {
+    "battleship": {
+      "name": "Schiffe versenken",
+      "description": "Platziere deine Flotte und versenke die feindlichen Schiffe.",
+      "place_your_fleet": "Flotte aufstellen",
+      "waiting_opponent_placement": "Flotte aufgestellt! Warte auf Gegner…",
+      "your_turn_fire": "Du bist dran – wähle ein Ziel!",
+      "waiting_for_fire": "Warte auf Gegner…",
+      "enemy_waters": "Feindliche Gewässer",
+      "your_fleet": "Deine Flotte",
+      "ships_to_place": "Noch zu platzierende Schiffe",
+      "all_placed": "Alle Schiffe platziert",
+      "ship_battleship": "Schlachtschiff",
+      "ship_cruiser": "Kreuzer",
+      "ship_submarine": "U-Boot",
+      "ship_destroyer": "Zerstörer",
+      "horizontal": "H",
+      "vertical": "V",
+      "sunk_enemy": "Gegner versenkt",
+      "sunk_yours": "Eigene versenkt",
+      "how_to_play": "Stelle deine Flotte aus 10 Schiffen auf dem 10×10 Raster auf: 1 Schlachtschiff (4 Felder), 2 Kreuzer (3), 3 Zerstörer (2), 4 U-Boote (1).\nSchiffe dürfen sich nicht berühren, auch nicht diagonal.\nAuf ein platziertes Schiff klicken, um es zu entfernen und neu zu platzieren.\nFeuere abwechselnd auf das gegnerische Raster — ein Treffer bringt einen Extra-Schuss, weiter schießen bis zur ersten Niete!\nVersenke alle 10 gegnerischen Schiffe, um zu gewinnen.",
+      "remove_hint": "Auf ein platziertes Schiff klicken zum Entfernen.",
+      "error_out_of_bounds": "Schiff verlässt das Spielfeld.",
+      "error_touching": "Schiffe dürfen sich nicht berühren."
+    }
+  }
+}

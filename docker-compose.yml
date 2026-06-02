@@ -1,0 +1,40 @@
+services:
+  ludus:
+    image: ghcr.io/oxivanisher/ludus:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - SESSION_TTL_DAYS=${SESSION_TTL_DAYS:-30}
+      - FINISHED_SESSION_TTL_DAYS=${FINISHED_SESSION_TTL_DAYS:-3}
+      - LUDUS_DOMAIN=${LUDUS_DOMAIN:-ludus.localhost}
+      - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY:-}
+      - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY:-}
+      - VAPID_CONTACT_EMAIL=${VAPID_CONTACT_EMAIL:-admin@example.com}
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ludus.rule=Host(`${LUDUS_DOMAIN:-ludus.localhost}`)"
+      - "traefik.http.routers.ludus.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ludus.loadbalancer.server.port=8000"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  redis_data:

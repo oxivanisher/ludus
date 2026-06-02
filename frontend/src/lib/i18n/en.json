@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "my_token": "My Token"
+  },
+  "token_import": {
+    "prompt": "Import token {token}? This replaces your current device identity.",
+    "confirm": "Import",
+    "cancel": "Cancel"
+  },
+  "lobby": {
+    "title": "My Games",
+    "loading": "Loading…",
+    "no_active": "No active games. Start one below!",
+    "new_game": "+ New Game",
+    "open_games": "Open Games",
+    "finished_games": "Finished Games",
+    "past_games_link": "Past Games →",
+    "stats_in_progress": "{count, plural, one {# game} other {# games}} in progress",
+    "stats_total": "{count, plural, one {# game} other {# games}} played all time",
+    "create": {
+      "title": "Start a new game",
+      "username_label": "Your username",
+      "username_placeholder": "Enter a username",
+      "choose_game": "Choose game",
+      "public_label": "Public game — anyone on this server can join",
+      "submit": "Create & Get Invite Link",
+      "submitting": "Creating…"
+    }
+  },
+  "history": {
+    "title": "Past Games",
+    "back": "← Back to lobby",
+    "loading": "Loading…",
+    "empty": "No finished games yet."
+  },
+  "game_room": {
+    "back": "← Back to lobby",
+    "loading": "Loading…",
+    "status_waiting": "waiting",
+    "status_playing": "playing",
+    "status_finished": "finished",
+    "waiting_title": "Waiting for another player to join.",
+    "invite_link": "Invite link",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "join_placeholder": "Your username",
+    "join": "Join game",
+    "joining": "Joining…",
+    "you_win": "You win! 🎉",
+    "winner_wins": "{winner} wins!",
+    "draw": "It's a draw!",
+    "go_to_rematch": "Go to Rematch →",
+    "play_again": "Play Again",
+    "starting_rematch": "Starting…",
+    "your_turn": "Your turn!",
+    "their_turn": "Waiting for {player}…",
+    "push_on": "🔔 Notifying",
+    "push_off": "🔕 Notify me",
+    "push_on_title": "Notifications on — click to disable",
+    "push_off_title": "Enable turn notifications",
+    "cancel_game": "Cancel game",
+    "cancelling": "Cancelling…",
+    "how_to_play": "How to play",
+    "no_ui": "No UI found for game \"{slug}\"."
+  },
+  "game_card": {
+    "vs": "vs. {opponents}",
+    "waiting_for_opponent": "waiting for opponent",
+    "you": "(you)",
+    "status_finished": "Finished",
+    "status_waiting": "Waiting",
+    "your_turn": "Your turn",
+    "their_turn": "Their turn",
+    "just_now": "just now",
+    "hours_ago": "{n}h ago",
+    "days_ago": "{n}d ago"
+  },
+  "token_manager": {
+    "title": "Player Token",
+    "description": "Your token identifies your games on this device. Export it to continue on another device — no account needed.",
+    "your_token": "Your token",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "qr_hint": "Scan on another device to import automatically",
+    "import_label": "Import a token from another device",
+    "import_placeholder": "Paste token here",
+    "import_btn": "Import",
+    "warning": "This will replace your current token. Games on this device will no longer be visible unless you re-import the original token.",
+    "confirm_import": "Yes, import",
+    "cancel": "Cancel"
+  }
+}

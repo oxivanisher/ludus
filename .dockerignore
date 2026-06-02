@@ -1,0 +1,22 @@
+.env
+.git
+.github
+.claude
+.idea
+.vscode
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Node / frontend build artifacts (built inside Docker)
+frontend/node_modules/
+frontend/dist/
+frontend/.svelte-kit/
+
+# Docs
+docs/
+*.md

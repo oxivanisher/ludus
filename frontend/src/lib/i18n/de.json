@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "my_token": "Mein Token"
+  },
+  "token_import": {
+    "prompt": "Token {token} importieren? Dies ersetzt deine aktuelle Geräteidentität.",
+    "confirm": "Importieren",
+    "cancel": "Abbrechen"
+  },
+  "lobby": {
+    "title": "Meine Spiele",
+    "loading": "Lade…",
+    "no_active": "Keine aktiven Spiele. Starte unten ein neues!",
+    "new_game": "+ Neues Spiel",
+    "open_games": "Offene Spiele",
+    "finished_games": "Beendete Spiele",
+    "past_games_link": "Vergangene Spiele →",
+    "stats_in_progress": "{count, plural, one {# Spiel läuft} other {# Spiele laufen}} gerade",
+    "stats_total": "{count, plural, one {# Spiel} other {# Spiele}} insgesamt gespielt",
+    "create": {
+      "title": "Neues Spiel starten",
+      "username_label": "Dein Benutzername",
+      "username_placeholder": "Benutzername eingeben",
+      "choose_game": "Spiel wählen",
+      "public_label": "Öffentliches Spiel – jeder auf diesem Server kann beitreten",
+      "submit": "Erstellen & Einladungslink erhalten",
+      "submitting": "Erstelle…"
+    }
+  },
+  "history": {
+    "title": "Vergangene Spiele",
+    "back": "← Zurück zur Lobby",
+    "loading": "Lade…",
+    "empty": "Noch keine beendeten Spiele."
+  },
+  "game_room": {
+    "back": "← Zurück zur Lobby",
+    "loading": "Lade…",
+    "status_waiting": "Wartet",
+    "status_playing": "Läuft",
+    "status_finished": "Beendet",
+    "waiting_title": "Warte auf einen weiteren Spieler.",
+    "invite_link": "Einladungslink",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "join_placeholder": "Dein Benutzername",
+    "join": "Spiel beitreten",
+    "joining": "Trete bei…",
+    "you_win": "Du gewinnst! 🎉",
+    "winner_wins": "{winner} gewinnt!",
+    "draw": "Unentschieden!",
+    "go_to_rematch": "Zum Rückspiel →",
+    "play_again": "Nochmal spielen",
+    "starting_rematch": "Starte…",
+    "your_turn": "Du bist dran!",
+    "their_turn": "Warte auf {player}…",
+    "push_on": "🔔 Benachrichtigungen an",
+    "push_off": "🔕 Benachrichtigen",
+    "push_on_title": "Benachrichtigungen an – zum Deaktivieren klicken",
+    "push_off_title": "Zugbenachrichtigungen aktivieren",
+    "cancel_game": "Spiel abbrechen",
+    "cancelling": "Wird abgebrochen…",
+    "how_to_play": "Spielregeln",
+    "no_ui": "Keine Oberfläche für Spiel \"{slug}\" gefunden."
+  },
+  "game_card": {
+    "vs": "gegen {opponents}",
+    "waiting_for_opponent": "Warte auf Gegner",
+    "you": "(du)",
+    "status_finished": "Beendet",
+    "status_waiting": "Wartet",
+    "your_turn": "Du bist dran",
+    "their_turn": "Gegner ist dran",
+    "just_now": "gerade eben",
+    "hours_ago": "vor {n}h",
+    "days_ago": "vor {n}d"
+  },
+  "token_manager": {
+    "title": "Spieler-Token",
+    "description": "Dein Token identifiziert deine Spiele auf diesem Gerät. Exportiere ihn, um auf einem anderen Gerät weiterzuspielen – kein Konto nötig.",
+    "your_token": "Dein Token",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "qr_hint": "Auf einem anderen Gerät scannen, um automatisch zu importieren",
+    "import_label": "Token von einem anderen Gerät importieren",
+    "import_placeholder": "Token hier einfügen",
+    "import_btn": "Importieren",
+    "warning": "Dies ersetzt deinen aktuellen Token. Spiele auf diesem Gerät sind nicht mehr sichtbar, sofern du den originalen Token nicht erneut importierst.",
+    "confirm_import": "Ja, importieren",
+    "cancel": "Abbrechen"
+  }
+}

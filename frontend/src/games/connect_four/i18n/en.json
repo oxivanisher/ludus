@@ -1,0 +1,10 @@
+{
+  "games": {
+    "connect_four": {
+      "name": "Connect Four",
+      "description": "Drop pieces into the grid. First to connect four wins.",
+      "you_label": "(you)",
+      "how_to_play": "Players take turns dropping a piece into one of the 7 columns.\nPieces fall to the lowest available row in that column.\nFirst to connect 4 pieces in a row — horizontally, vertically, or diagonally — wins.\nIf the grid fills up with no winner, the game is a draw."
+    }
+  }
+}
