@@ -10,6 +10,9 @@ RUN npm run build
 FROM python:3.12-slim AS backend
 WORKDIR /app
 
+ARG UID=1000
+ARG GID=1000
+
 RUN pip install uv --quiet
 
 COPY backend/pyproject.toml .
@@ -19,5 +22,11 @@ COPY backend/ .
 
 # Pull the compiled frontend from stage 1
 COPY --from=frontend-builder /frontend/dist ./static
+
+RUN groupadd -g "${GID}" ludus \
+    && useradd -u "${UID}" -g "${GID}" -s /bin/sh -M ludus \
+    && chown -R "${UID}:${GID}" /app
+
+USER ${UID}:${GID}
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
