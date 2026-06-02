@@ -26,6 +26,7 @@ services:
         condition: service_healthy
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=${TRAEFIK_NETWORK:-web}"
       - "traefik.http.routers.ludus.rule=Host(`${LUDUS_DOMAIN:-ludus.localhost}`)"
       - "traefik.http.routers.ludus.tls.certresolver=letsencrypt"
       - "traefik.http.services.ludus.loadbalancer.server.port=8000"
