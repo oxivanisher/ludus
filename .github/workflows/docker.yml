@@ -54,3 +54,7 @@ jobs:
             GIT_COMMIT=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Trigger Portainer redeploy
+        if: github.ref == 'refs/heads/main' && secrets.PORTAINER_WEBHOOK_URL != ''
+        run: curl -fsSL -X POST "${{ secrets.PORTAINER_WEBHOOK_URL }}"

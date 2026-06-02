@@ -1,6 +1,7 @@
 services:
   ludus:
     image: ghcr.io/oxivanisher/ludus:latest
+    pull_policy: always
     build:
       context: .
       dockerfile: Dockerfile
