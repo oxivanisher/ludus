@@ -91,6 +91,8 @@ Add the printed values to your `.env` file, then restart: `docker compose up -d`
 | `TRAEFIK_NETWORK` | `web` | Docker network Traefik is attached to — set this when the container is on multiple networks |
 | `UID` | `1000` | User ID the container process runs as |
 | `GID` | `1000` | Group ID the container process runs as |
+| `MAX_ACTIVE_SESSIONS` | `200` | Hard cap on total concurrent sessions (waiting + playing) — protects against flooding |
+| `MAX_PUBLIC_SESSIONS` | `20` | Max number of public open games visible in the lobby |
 | `VAPID_PRIVATE_KEY` | _(empty)_ | VAPID private key — push disabled if unset |
 | `VAPID_PUBLIC_KEY` | _(empty)_ | VAPID public key |
 | `VAPID_CONTACT_EMAIL` | `admin@example.com` | Contact email sent with push requests |

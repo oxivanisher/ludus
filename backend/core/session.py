@@ -11,14 +11,16 @@ PLAYER_PREFIX = "player:"
 PUBLIC_KEY = "public:sessions"
 STAT_ACTIVE = "stats:active_games"
 STAT_TOTAL = "stats:total_games"
+STAT_WAITING = "stats:waiting_sessions"
 
 
 async def get_stats() -> dict:
     r = await get_redis()
-    active, total = await r.mget(STAT_ACTIVE, STAT_TOTAL)
+    active, total, waiting = await r.mget(STAT_ACTIVE, STAT_TOTAL, STAT_WAITING)
     return {
         "active_games": max(0, int(active or 0)),
         "total_games": int(total or 0),
+        "waiting_games": max(0, int(waiting or 0)),
     }
 
 
@@ -26,6 +28,17 @@ async def create_session(game_slug: str, username: str, player_token: str, publi
     game = get_game(game_slug)
     if game is None:
         raise ValueError(f"Unknown game: {game_slug}")
+
+    r = await get_redis()
+    waiting, active = await r.mget(STAT_WAITING, STAT_ACTIVE)
+    total_sessions = max(0, int(waiting or 0)) + max(0, int(active or 0))
+    if total_sessions >= settings.max_active_sessions:
+        raise ValueError("Server is at capacity. Please try again later.")
+
+    if public:
+        public_count = await r.scard(PUBLIC_KEY)
+        if public_count >= settings.max_public_sessions:
+            raise ValueError("Too many open public games right now. Please wait for one to start or create a private game.")
 
     session_id = str(uuid.uuid4())
     now = time.time()
@@ -42,11 +55,11 @@ async def create_session(game_slug: str, username: str, player_token: str, publi
         "last_action_at": now,
     }
 
-    r = await get_redis()
     pipe = r.pipeline()
     pipe.set(f"{SESSION_PREFIX}{session_id}", json.dumps(session), ex=settings.session_ttl)
     pipe.sadd(f"{PLAYER_PREFIX}{player_token}:sessions", session_id)
     pipe.expire(f"{PLAYER_PREFIX}{player_token}:sessions", settings.session_ttl)
+    pipe.incr(STAT_WAITING)
     if public:
         pipe.sadd(PUBLIC_KEY, session_id)
     await pipe.execute()
@@ -116,6 +129,7 @@ async def join_session(session_id: str, username: str, player_token: str) -> dic
     pipe.sadd(f"{PLAYER_PREFIX}{player_token}:sessions", session_id)
     pipe.expire(f"{PLAYER_PREFIX}{player_token}:sessions", settings.session_ttl)
     if game_starting:
+        pipe.decr(STAT_WAITING)
         pipe.incr(STAT_ACTIVE)
         pipe.srem(PUBLIC_KEY, session_id)
     await pipe.execute()
@@ -197,6 +211,7 @@ async def cancel_session(session_id: str, player_token: str) -> None:
     pipe = r.pipeline()
     pipe.delete(f"{SESSION_PREFIX}{session_id}")
     pipe.srem(PUBLIC_KEY, session_id)
+    pipe.decr(STAT_WAITING)
     for p in session["players"]:
         pipe.srem(f"{PLAYER_PREFIX}{p['token']}:sessions", session_id)
     await pipe.execute()

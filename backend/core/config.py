@@ -16,6 +16,11 @@ class Settings(BaseSettings):
 
     git_commit: str = "dev"
 
+    # Abuse protection — cap total concurrent sessions and public open games.
+    # With ~50 users each holding a few games, 200 total gives comfortable headroom.
+    max_active_sessions: int = 200
+    max_public_sessions: int = 20
+
     @property
     def session_ttl(self) -> int:
         return self.session_ttl_days * 86400
