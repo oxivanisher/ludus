@@ -30,6 +30,7 @@
 
   let inviteCopied = $state(false);
   let inviteUrl = $derived(session ? `${location.origin}/game/${session.uuid}` : "");
+  let shareSupported = $derived(typeof navigator.share === "function");
 
   let pushSupported = isPushSupported();
   let pushPermission = $state(Notification.permission ?? "default");
@@ -83,6 +84,18 @@
     await navigator.clipboard.writeText(inviteUrl);
     inviteCopied = true;
     setTimeout(() => { inviteCopied = false; }, 2000);
+  }
+
+  async function shareInvite() {
+    try {
+      await navigator.share({
+        title: $_(`games.${session.game_slug}.name`, { default: session.game_slug }),
+        text: $_('game_room.share_text', { values: { game: $_(`games.${session.game_slug}.name`, { default: session.game_slug }) } }),
+        url: inviteUrl,
+      });
+    } catch {
+      // user cancelled or share failed — ignore
+    }
   }
 
   let GameComponent = $derived(session ? GAME_COMPONENTS[session.game_slug] : null);
@@ -209,6 +222,14 @@
           >
             {inviteCopied ? $_('game_room.copied') : $_('game_room.copy')}
           </button>
+          {#if shareSupported}
+            <button
+              class="px-3 py-1 bg-indigo-600 text-white rounded text-sm hover:bg-indigo-700"
+              onclick={shareInvite}
+            >
+              {$_('game_room.share')}
+            </button>
+          {/if}
         </div>
       </div>
       {/if}

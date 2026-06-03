@@ -72,6 +72,8 @@
     "invite_link": "Einladungslink",
     "copy": "Kopieren",
     "copied": "Kopiert!",
+    "share": "Teilen",
+    "share_text": "Spiele {game} mit mir!",
     "join_placeholder": "Dein Benutzername",
     "join": "Spiel beitreten",
     "joining": "Trete bei…",
