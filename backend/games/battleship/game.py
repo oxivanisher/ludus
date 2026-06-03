@@ -226,11 +226,12 @@ class Battleship(BaseGame):
             for ship in my_board["ships"]
             if all(tuple(cell) in opp_shot_set for cell in ship["cells"])
         ]
-        sunk_opponent = [
-            ship["type"]
+        sunk_opponent_ships = [
+            ship
             for ship in opp_board["ships"]
             if all(tuple(cell) in my_shot_set for cell in ship["cells"])
         ]
+        sunk_opponent = [ship["type"] for ship in sunk_opponent_ships]
 
         return {
             "phase": state["phase"],
@@ -243,4 +244,5 @@ class Battleship(BaseGame):
             "opponent_ships": opp_board["ships"] if self.is_game_over(state) else [],
             "sunk_my": sunk_my,
             "sunk_opponent": sunk_opponent,
+            "sunk_opponent_ships": sunk_opponent_ships,
         }

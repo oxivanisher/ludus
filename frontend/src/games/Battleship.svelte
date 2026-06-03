@@ -138,6 +138,21 @@
     });
   });
 
+  const mySunkCells = $derived.by(() => {
+    const set = new Set();
+    for (const ship of myShips)
+      if (ship.cells.every(([r, c]) => incomingMap[`${r},${c}`] === true))
+        for (const [r, c] of ship.cells) set.add(`${r},${c}`);
+    return set;
+  });
+
+  const opponentSunkCells = $derived.by(() => {
+    const set = new Set();
+    for (const ship of state.sunk_opponent_ships ?? [])
+      for (const [r, c] of ship.cells) set.add(`${r},${c}`);
+    return set;
+  });
+
   const myGridCells = $derived.by(() => {
     return Array.from({ length: 100 }, (_, i) => {
       const row = Math.floor(i / 10), col = i % 10;
@@ -146,8 +161,10 @@
       const ship = myShipCellMap[key];
       let cls, hitMarker = false, missMarker = false;
       if (ship !== undefined) {
-        if (incomingResult === true) { cls = 'bg-red-500'; hitMarker = true; }
-        else { cls = SHIP_COLORS[ship.type] + ' opacity-80'; }
+        if (incomingResult === true) {
+          cls = mySunkCells.has(key) ? 'bg-red-800 dark:bg-red-950' : 'bg-red-500';
+          hitMarker = true;
+        } else { cls = SHIP_COLORS[ship.type] + ' opacity-80'; }
       } else if (incomingResult === false) {
         cls = 'bg-sky-200 dark:bg-sky-800/60'; missMarker = true;
       } else {
@@ -165,7 +182,8 @@
       const opponentShip = opponentShipCellMap[key];
       let cls, hitMarker = false, missMarker = false, canFire = false;
       if (shotResult === true) {
-        cls = 'bg-red-500'; hitMarker = true;
+        cls = opponentSunkCells.has(key) ? 'bg-red-800 dark:bg-red-950' : 'bg-red-500';
+        hitMarker = true;
       } else if (shotResult === false) {
         cls = 'bg-sky-200 dark:bg-sky-800/60'; missMarker = true;
       } else if (opponentShip) {
