@@ -21,8 +21,11 @@ services:
       - VAPID_CONTACT_EMAIL=${VAPID_CONTACT_EMAIL:-admin@example.com}
       - MAX_ACTIVE_SESSIONS=${MAX_ACTIVE_SESSIONS:-200}
       - MAX_PUBLIC_SESSIONS=${MAX_PUBLIC_SESSIONS:-20}
+      - METRICS_ENABLED=${METRICS_ENABLED:-false}
+      - METRICS_PORT=${METRICS_PORT:-9090}
     ports:
       - "8000:8000"
+      - "127.0.0.1:${METRICS_PORT:-9090}:${METRICS_PORT:-9090}"
     depends_on:
       redis:
         condition: service_healthy

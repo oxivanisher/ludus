@@ -2,6 +2,7 @@ import json
 import time
 import uuid
 
+from . import metrics
 from .config import settings
 from .plugin_loader import get_game
 from .redis_client import get_redis
@@ -27,7 +28,13 @@ async def get_stats() -> dict:
     }
 
 
-async def create_session(game_slug: str, username: str, player_token: str, public: bool = False) -> dict:
+async def create_session(
+    game_slug: str,
+    username: str,
+    player_token: str,
+    public: bool = False,
+    vs_computer: bool = False,
+) -> dict:
     game = get_game(game_slug)
     if game is None:
         raise ValueError(f"Unknown game: {game_slug}")
@@ -50,12 +57,14 @@ async def create_session(game_slug: str, username: str, player_token: str, publi
         "game_slug": game_slug,
         "status": "waiting",
         "public": public,
+        "vs_computer": vs_computer,
         "players": [{"username": username, "token": player_token}],
         "current_turn": None,
         "state": {},
         "winner": None,
         "created_at": now,
         "last_action_at": now,
+        "started_at": None,
     }
 
     pipe = r.pipeline()
@@ -66,6 +75,10 @@ async def create_session(game_slug: str, username: str, player_token: str, publi
     if public:
         pipe.sadd(PUBLIC_KEY, session_id)
     await pipe.execute()
+
+    visibility = "vs_computer" if vs_computer else ("public" if public else "private")
+    metrics.sessions_created.labels(game=game_slug, visibility=visibility).inc()
+    metrics.sessions_waiting.inc()
 
     return session
 
@@ -123,6 +136,7 @@ async def join_session(session_id: str, username: str, player_token: str) -> dic
         session["state"] = game.initial_state(usernames)
         session["current_turn"] = usernames[0]
         session["status"] = "playing"
+        session["started_at"] = time.time()
 
     session["last_action_at"] = time.time()
     await save_session(session)
@@ -136,6 +150,11 @@ async def join_session(session_id: str, username: str, player_token: str) -> dic
         pipe.incr(STAT_ACTIVE)
         pipe.srem(PUBLIC_KEY, session_id)
     await pipe.execute()
+
+    if game_starting:
+        metrics.sessions_started.labels(game=session["game_slug"]).inc()
+        metrics.sessions_waiting.dec()
+        metrics.sessions_active.inc()
 
     return session
 
@@ -183,12 +202,24 @@ async def apply_action(session_id: str, player_token: str, action: dict) -> dict
 
     await save_session(session)
 
+    game_slug = session["game_slug"]
+    metrics.actions_processed.labels(game=game_slug).inc()
+
     if game_over:
         r = await get_redis()
         pipe = r.pipeline()
         pipe.decr(STAT_ACTIVE)
         pipe.incr(STAT_TOTAL)
         await pipe.execute()
+
+        winner = session["winner"]
+        outcome = "win" if winner else "draw"
+        metrics.sessions_active.dec()
+        metrics.sessions_finished.labels(game=game_slug, outcome=outcome).inc()
+        if session.get("started_at"):
+            metrics.session_duration_seconds.labels(game=game_slug).observe(
+                time.time() - session["started_at"]
+            )
 
     if next_player_token:
         from .push import notify_player
@@ -222,11 +253,19 @@ async def forfeit_session(session_id: str, player_token: str) -> dict:
 
     await save_session(session)
 
+    game_slug = session["game_slug"]
     r = await get_redis()
     pipe = r.pipeline()
     pipe.decr(STAT_ACTIVE)
     pipe.incr(STAT_TOTAL)
     await pipe.execute()
+
+    metrics.sessions_active.dec()
+    metrics.sessions_finished.labels(game=game_slug, outcome="forfeit").inc()
+    if session.get("started_at"):
+        metrics.session_duration_seconds.labels(game=game_slug).observe(
+            time.time() - session["started_at"]
+        )
 
     return session
 
@@ -248,6 +287,9 @@ async def cancel_session(session_id: str, player_token: str) -> None:
     for p in session["players"]:
         pipe.srem(f"{PLAYER_PREFIX}{p['token']}:sessions", session_id)
     await pipe.execute()
+
+    metrics.sessions_cancelled.inc()
+    metrics.sessions_waiting.dec()
 
 
 async def get_public_sessions() -> list[dict]:
@@ -291,18 +333,21 @@ async def create_rematch(session_id: str, player_token: str) -> tuple[dict, dict
     reversed_players = list(reversed(session["players"]))
     usernames = [p["username"] for p in reversed_players]
 
-    new_session_id = str(uuid.uuid4())
     now = time.time()
+    new_session_id = str(uuid.uuid4())
     new_session = {
         "uuid": new_session_id,
         "game_slug": session["game_slug"],
         "status": "playing",
+        "public": False,
+        "vs_computer": session.get("vs_computer", False),
         "players": reversed_players,
         "current_turn": usernames[0],
         "state": game.initial_state(usernames),
         "winner": None,
         "created_at": now,
         "last_action_at": now,
+        "started_at": now,
         "rematch_session_id": None,
         "previous_session_id": session_id,
     }
@@ -318,5 +363,10 @@ async def create_rematch(session_id: str, player_token: str) -> tuple[dict, dict
         pipe.expire(f"{PLAYER_PREFIX}{p['token']}:sessions", settings.session_ttl)
     pipe.incr(STAT_ACTIVE)
     await pipe.execute()
+
+    game_slug = session["game_slug"]
+    metrics.sessions_rematched.labels(game=game_slug).inc()
+    metrics.sessions_started.labels(game=game_slug).inc()
+    metrics.sessions_active.inc()
 
     return session, new_session

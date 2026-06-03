@@ -10,6 +10,7 @@ from api.push import router as push_router
 from api.sessions import router as sessions_router
 from api.websocket import router as ws_router
 from core.config import settings
+from core.metrics import start_metrics_server
 from core.plugin_loader import load_plugins
 from core.redis_client import close_redis
 
@@ -21,6 +22,9 @@ async def lifespan(app: FastAPI):
     logging.basicConfig(level=logging.INFO)
     logger.info("Ludus starting — commit %s", settings.git_commit)
     load_plugins()
+    start_metrics_server()
+    if settings.metrics_enabled:
+        logger.info("Prometheus metrics available on port %d", settings.metrics_port)
     yield
     await close_redis()
 

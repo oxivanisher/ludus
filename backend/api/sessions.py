@@ -65,7 +65,7 @@ async def create_session(
 ):
     token = _require_token(x_player_token)
     try:
-        session = await session_store.create_session(body.game_slug, body.username, token, body.public)
+        session = await session_store.create_session(body.game_slug, body.username, token, body.public, body.vs_computer)
         if body.vs_computer:
             game = get_game(body.game_slug)
             if not game or not game.meta.supports_solo:

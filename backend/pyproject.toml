@@ -9,6 +9,7 @@ dependencies = [
     "pydantic>=2.10.0",
     "pydantic-settings>=2.7.0",
     "pywebpush>=2.0.0",
+    "prometheus-client>=0.21.0",
 ]
 
 [tool.uv]

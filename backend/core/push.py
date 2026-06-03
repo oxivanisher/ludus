@@ -12,6 +12,7 @@ import logging
 
 from pywebpush import WebPushException, webpush
 
+from . import metrics
 from .config import settings
 from .connections import is_connected
 from .redis_client import get_redis
@@ -54,6 +55,7 @@ async def notify_player(
         return  # push not configured
 
     if is_connected(session_id, player_token):
+        metrics.push_skipped_online.inc()
         return  # player is already watching — no need to interrupt
 
     subscriptions = await _get_subscriptions(player_token)
@@ -79,6 +81,7 @@ async def notify_player(
                     "sub": f"mailto:{settings.vapid_contact_email}",
                 },
             )
+            metrics.push_sent.inc()
         except WebPushException as e:
             if e.response is not None and e.response.status_code == 410:
                 stale.append(sub)
@@ -87,3 +90,4 @@ async def notify_player(
 
     for sub in stale:
         await delete_subscription(player_token, sub)
+        metrics.push_stale_removed.inc()

@@ -10,17 +10,23 @@ replace is_connected() with a Redis presence check instead.
 from __future__ import annotations
 from typing import Any
 
+from . import metrics
+
 # session_id → { player_token → WebSocket }
 _registry: dict[str, dict[str, Any]] = {}
 
 
 def register(session_id: str, player_token: str, ws: Any) -> None:
     _registry.setdefault(session_id, {})[player_token] = ws
+    metrics.websocket_connections.inc()
+    metrics.websocket_connections_total.inc()
 
 
 def unregister(session_id: str, player_token: str) -> None:
     session_sockets = _registry.get(session_id, {})
-    session_sockets.pop(player_token, None)
+    if player_token in session_sockets:
+        session_sockets.pop(player_token)
+        metrics.websocket_connections.dec()
     if not session_sockets:
         _registry.pop(session_id, None)
 
