@@ -1,0 +1,28 @@
+{
+  "games": {
+    "mastermind": {
+      "name": "Mastermind",
+      "description": "Set a secret color code or crack it before guesses run out.",
+      "role_code_maker": "Code Maker",
+      "role_code_breaker": "Code Breaker",
+      "you_are_code_maker": "You are the Code Maker",
+      "you_are_code_breaker": "You are the Code Breaker",
+      "set_your_code": "Set your secret code",
+      "set_code_hint": "Pick 4 colors — duplicates allowed. Your opponent won't see it.",
+      "set_code_btn": "Set Code",
+      "waiting_for_code": "Waiting for {maker} to set their secret code…",
+      "your_code_is": "Your secret code:",
+      "guess_prompt": "Your turn — enter a guess!",
+      "waiting_for_guess": "Waiting for {breaker} to guess…",
+      "guess_btn": "Submit Guess",
+      "guesses_remaining": "{n} guess remaining",
+      "guesses_remaining_plural": "{n} guesses remaining",
+      "black_peg": "Right color, right position",
+      "white_peg": "Right color, wrong position",
+      "code_cracked": "{breaker} cracked the code!",
+      "code_safe": "{maker} wins — code was not cracked!",
+      "the_code_was": "The secret code was:",
+      "how_to_play": "One player sets a secret sequence of 4 colors (duplicates allowed). The other player has 10 guesses to crack it.\nAfter each guess you get feedback: a black peg means the right color in the right spot; a white peg means the right color in the wrong spot.\nUse the clues to narrow down the code. Crack it to win!"
+    }
+  }
+}

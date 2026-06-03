@@ -1,0 +1,28 @@
+{
+  "games": {
+    "mastermind": {
+      "name": "Mastermind",
+      "description": "Setze einen geheimen Farbcode oder knacke ihn, bevor die Versuche aufgebraucht sind.",
+      "role_code_maker": "Code-Setzer",
+      "role_code_breaker": "Code-Knacker",
+      "you_are_code_maker": "Du bist der Code-Setzer",
+      "you_are_code_breaker": "Du bist der Code-Knacker",
+      "set_your_code": "Setze deinen Geheimcode",
+      "set_code_hint": "Wähle 4 Farben — Wiederholungen erlaubt. Dein Gegner wird ihn nicht sehen.",
+      "set_code_btn": "Code festlegen",
+      "waiting_for_code": "Warte auf {maker}, der den Geheimcode festlegt…",
+      "your_code_is": "Dein Geheimcode:",
+      "guess_prompt": "Du bist dran — gib einen Tipp ein!",
+      "waiting_for_guess": "Warte auf {breaker}…",
+      "guess_btn": "Tipp absenden",
+      "guesses_remaining": "Noch {n} Versuch",
+      "guesses_remaining_plural": "Noch {n} Versuche",
+      "black_peg": "Richtige Farbe, richtige Position",
+      "white_peg": "Richtige Farbe, falsche Position",
+      "code_cracked": "{breaker} hat den Code geknackt!",
+      "code_safe": "{maker} gewinnt — der Code wurde nicht geknackt!",
+      "the_code_was": "Der Geheimcode war:",
+      "how_to_play": "Ein Spieler legt eine geheime Folge aus 4 Farben fest (Wiederholungen erlaubt). Der andere hat 10 Versuche, sie zu knacken.\nNach jedem Tipp gibt es Rückmeldung: ein schwarzer Stift steht für die richtige Farbe an der richtigen Stelle, ein weißer für die richtige Farbe an der falschen Stelle.\nNutze die Hinweise, um den Code einzugrenzen. Knacke ihn, um zu gewinnen!"
+    }
+  }
+}

@@ -8,11 +8,13 @@
   import TicTacToe from "../games/TicTacToe.svelte";
   import ConnectFour from "../games/ConnectFour.svelte";
   import Battleship from "../games/Battleship.svelte";
+  import Mastermind from "../games/Mastermind.svelte";
 
   const GAME_COMPONENTS = {
     tictactoe: TicTacToe,
     connect_four: ConnectFour,
     battleship: Battleship,
+    mastermind: Mastermind,
   };
 
   let { sessionId, onBack, onJoinGame } = $props();
