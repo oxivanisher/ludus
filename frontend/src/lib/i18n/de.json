@@ -1,6 +1,34 @@
 {
   "nav": {
-    "my_token": "Mein Token"
+    "my_token": "Mein Token",
+    "about": "Über"
+  },
+  "about": {
+    "title": "Über Ludus",
+    "what_title": "Was ist Ludus?",
+    "what_body": "Ludus ist eine selbst hostbare, datenschutzfreundliche Plattform für einfache Mehrspieler-Rundenspiele. Keine Anmeldung, kein Tracking, keine dauerhaft gespeicherten Nutzerdaten — einfach ein Spiel starten und einen Link teilen.",
+    "privacy_title": "Datenschutz & Anonymität",
+    "privacy_body": "Ludus ist so konzipiert, dass nichts über dich gespeichert wird, außer was das Spiel selbst benötigt.",
+    "privacy_points": [
+      "Keine Konten oder E-Mail-Adressen.",
+      "Keine IP-Adressen werden von der Anwendung gespeichert. Ein vorgeschalteter Reverse-Proxy kann festhalten, dass eine Verbindung hergestellt wurde, aber Ludus selbst erfasst oder verarbeitet IP-Adressen nie.",
+      "Kein Chat oder dauerhaftes Messaging.",
+      "Spielsitzungen werden temporär im Arbeitsspeicher gehalten und laufen automatisch ab — sobald eine Sitzung gelöscht ist, gibt es keine Spur mehr.",
+      "Benutzernamen werden pro Spiel gewählt und sind nie mit einer dauerhaften Identität verknüpft."
+    ],
+    "token_title": "Dein Spieler-Token",
+    "token_body": "Wenn du Ludus zum ersten Mal öffnest, wird ein zufälliger eindeutiger Token erzeugt und im lokalen Speicher deines Browsers gespeichert. Dieser Token ist deine einzige Identität auf der Plattform.",
+    "token_points": [
+      "Der Token ist eine zufällige UUID — er enthält keine persönlichen Informationen.",
+      "Er wird nur an den Server gesendet, um dich deinen Spielsitzungen zuzuordnen.",
+      "Er wird nie mit anderen Spielern geteilt oder ist außerhalb deines eigenen Browsers sichtbar.",
+      "Es werden keine Cookies verwendet — der Token lebt nur im lokalen Speicher deines Browsers.",
+      "Wenn du deinen Browser-Speicher leerst, ist der Token weg und deine Spiele sind auf diesem Gerät nicht mehr sichtbar.",
+      "Du kannst deinen Token als QR-Code oder Text exportieren und auf einem anderen Gerät importieren, um deine Spiele fortzusetzen — tippe oben auf «Mein Token»."
+    ],
+    "selfhost_title": "Selbst hosten",
+    "selfhost_body": "Ludus ist Open Source und darauf ausgelegt, selbst gehostet zu werden. Du kannst eine eigene Instanz für Freunde oder Familie betreiben. Den Quellcode und die Einrichtungsanleitung findest du auf GitHub:",
+    "selfhost_github": "github.com/oxivanisher/ludus"
   },
   "token_import": {
     "prompt": "Token {token} importieren? Dies ersetzt deine aktuelle Geräteidentität.",

@@ -6,6 +6,7 @@
   import Lobby from "./pages/Lobby.svelte";
   import GameRoom from "./pages/GameRoom.svelte";
   import History from "./pages/History.svelte";
+  import About from "./pages/About.svelte";
   import TokenManager from "./components/TokenManager.svelte";
 
   setupI18n();
@@ -18,7 +19,7 @@
   function navigate(to, id = null) {
     sessionId = id;
     page = to;
-    const url = to === "game" ? `/game/${id}` : to === "history" ? "/history" : "/";
+    const url = to === "game" ? `/game/${id}` : to === "history" ? "/history" : to === "about" ? "/about" : "/";
     window.history.pushState({}, "", url);
   }
 
@@ -38,6 +39,8 @@
       sessionId = match[1];
     } else if (path === "/history") {
       page = "history";
+    } else if (path === "/about") {
+      page = "about";
     }
 
     window.addEventListener("popstate", () => {
@@ -45,6 +48,7 @@
       const m = p.match(/^\/game\/([^/]+)/);
       if (m) { page = "game"; sessionId = m[1]; }
       else if (p === "/history") { page = "history"; sessionId = null; }
+      else if (p === "/about") { page = "about"; sessionId = null; }
       else { page = "lobby"; sessionId = null; }
     });
   });
@@ -88,6 +92,12 @@
     </div>
     <button
       class="text-sm underline opacity-80 hover:opacity-100"
+      onclick={() => navigate("about")}
+    >
+      {$_('nav.about')}
+    </button>
+    <button
+      class="text-sm underline opacity-80 hover:opacity-100"
       onclick={() => { showTokenManager = true; }}
     >
       {$_('nav.my_token')}
@@ -105,6 +115,8 @@
     {/key}
   {:else if page === "history"}
     <History onBack={() => navigate("lobby")} onJoinGame={(id) => navigate("game", id)} />
+  {:else if page === "about"}
+    <About onBack={() => navigate("lobby")} />
   {/if}
 </main>
 
