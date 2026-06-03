@@ -40,6 +40,9 @@ export const api = {
       body: JSON.stringify({ username }),
     }),
 
+  forfeitSession: (id) =>
+    request(`/api/sessions/${id}/forfeit`, { method: "POST" }),
+
   rematch: (id) =>
     request(`/api/sessions/${id}/rematch`, { method: "POST" }),
 

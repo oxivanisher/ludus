@@ -149,6 +149,27 @@ async def perform_action(
     return SessionResponse.from_session(session, token)
 
 
+@router.post("/sessions/{session_id}/forfeit", response_model=SessionResponse)
+async def forfeit_session(
+    session_id: str,
+    x_player_token: str | None = Header(default=None),
+):
+    token = _require_token(x_player_token)
+    try:
+        session = await session_store.forfeit_session(session_id, token)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    for tok, ws in connections.get_sockets(session_id).items():
+        viewer = SessionResponse.from_session(session, tok)
+        try:
+            await ws.send_text(json.dumps({"type": "state", "session": viewer.model_dump()}))
+        except Exception:
+            pass
+
+    return SessionResponse.from_session(session, token)
+
+
 @router.post("/sessions/{session_id}/rematch", response_model=SessionResponse, status_code=201)
 async def rematch(
     session_id: str,

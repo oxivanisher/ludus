@@ -103,6 +103,21 @@
     }
   }
 
+  let forfeitPending = $state(false);
+  let forfeiting = $state(false);
+
+  async function forfeitGame() {
+    forfeiting = true;
+    try {
+      await api.forfeitSession(sessionId);
+      forfeitPending = false;
+    } catch (e) {
+      error = e.message;
+    } finally {
+      forfeiting = false;
+    }
+  }
+
   let rematching = $state(false);
 
   async function requestRematch() {
@@ -294,5 +309,39 @@
     <GameComponent {session} {myUsername} onAction={sendAction} />
   {:else}
     <p class="text-gray-500 dark:text-gray-400 text-sm">{$_('game_room.no_ui', { values: { slug: session.game_slug } })}</p>
+  {/if}
+
+  <!-- Forfeit -->
+  {#if isParticipant && session.status === "playing"}
+    <div class="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800">
+      {#if !forfeitPending}
+        <button
+          class="text-xs text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+          onclick={() => { forfeitPending = true; }}
+        >
+          {$_('game_room.forfeit_game')}
+        </button>
+      {:else}
+        <div class="flex flex-col gap-2">
+          <p class="text-sm text-gray-600 dark:text-gray-400">{$_('game_room.forfeit_confirm')}</p>
+          <div class="flex gap-2">
+            <button
+              class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 disabled:opacity-50"
+              disabled={forfeiting}
+              onclick={forfeitGame}
+            >
+              {forfeiting ? $_('game_room.forfeiting') : $_('game_room.forfeit_yes')}
+            </button>
+            <button
+              class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-600 hover:border-gray-400
+                     dark:border-gray-600 dark:text-gray-400 dark:hover:border-gray-500"
+              onclick={() => { forfeitPending = false; }}
+            >
+              {$_('game_room.forfeit_cancel')}
+            </button>
+          </div>
+        </div>
+      {/if}
+    </div>
   {/if}
 {/if}

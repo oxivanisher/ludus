@@ -201,6 +201,36 @@ async def apply_action(session_id: str, player_token: str, action: dict) -> dict
     return session
 
 
+async def forfeit_session(session_id: str, player_token: str) -> dict:
+    session = await get_session(session_id)
+    if session is None:
+        raise ValueError("Session not found")
+    if session["status"] != "playing":
+        raise ValueError("Can only forfeit an active game")
+
+    forfeiter = next((p for p in session["players"] if p["token"] == player_token), None)
+    if forfeiter is None:
+        raise ValueError("You are not a participant in this session")
+
+    winner = next(
+        p["username"] for p in session["players"] if p["token"] != player_token
+    )
+    session["winner"] = winner
+    session["status"] = "finished"
+    session["current_turn"] = None
+    session["last_action_at"] = time.time()
+
+    await save_session(session)
+
+    r = await get_redis()
+    pipe = r.pipeline()
+    pipe.decr(STAT_ACTIVE)
+    pipe.incr(STAT_TOTAL)
+    await pipe.execute()
+
+    return session
+
+
 async def cancel_session(session_id: str, player_token: str) -> None:
     session = await get_session(session_id)
     if session is None:

@@ -89,6 +89,11 @@
     "push_off_title": "Enable turn notifications",
     "cancel_game": "Cancel game",
     "cancelling": "Cancelling…",
+    "forfeit_game": "Forfeit game",
+    "forfeit_confirm": "This will end the game and give the win to your opponent. Are you sure?",
+    "forfeit_yes": "Yes, forfeit",
+    "forfeit_cancel": "Never mind",
+    "forfeiting": "Forfeiting…",
     "how_to_play": "How to play",
     "no_ui": "No UI found for game \"{slug}\"."
   },

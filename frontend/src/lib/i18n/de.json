@@ -89,6 +89,11 @@
     "push_off_title": "Zugbenachrichtigungen aktivieren",
     "cancel_game": "Spiel abbrechen",
     "cancelling": "Wird abgebrochen…",
+    "forfeit_game": "Aufgeben",
+    "forfeit_confirm": "Das Spiel wird beendet und dein Gegner gewinnt. Bist du sicher?",
+    "forfeit_yes": "Ja, aufgeben",
+    "forfeit_cancel": "Doch nicht",
+    "forfeiting": "Gebe auf…",
     "how_to_play": "Spielregeln",
     "no_ui": "Keine Oberfläche für Spiel \"{slug}\" gefunden."
   },
