@@ -2,7 +2,7 @@
 
 A self-hostable, privacy-first multiplayer gaming platform for simple turn-based games.
 
-Play Tic-Tac-Toe, Battleship, Connect Four, and more — with anyone, on any device, with no accounts, no tracking, and no chat.
+Play with anyone, on any device — no accounts, no tracking, no chat.
 
 ---
 
@@ -13,6 +13,7 @@ Play Tic-Tac-Toe, Battleship, Connect Four, and more — with anyone, on any dev
 | Tic-Tac-Toe | 2 | Classic 3×3 grid — get three in a row to win |
 | Connect Four | 2 | Drop pieces into a 7×6 grid — connect four to win |
 | Battleship | 2 | Place your fleet and sink all 10 enemy ships |
+| Mastermind | 2 | Set a secret color code or crack it before guesses run out |
 
 ---
 
@@ -20,10 +21,10 @@ Play Tic-Tac-Toe, Battleship, Connect Four, and more — with anyone, on any dev
 
 Most online gaming platforms require accounts, collect data, and expose players to chat. Ludus is designed with the opposite priorities:
 
-- **No accounts.** Players identify themselves with a username they type when joining a game. Nothing is stored permanently.
-- **No tracking.** Sessions expire automatically. No analytics, no cookies beyond your anonymous player token.
+- **No accounts.** Players choose a username when joining a game. Nothing is stored permanently.
+- **No tracking.** Sessions expire automatically. No analytics, no cookies — your anonymous player token lives in `localStorage` only.
 - **No chat.** The only interaction is the game itself — safe for children.
-- **Self-hostable.** One `docker compose up` and you're running your own instance.
+- **Self-hostable.** One `docker compose up` and you are running your own instance.
 - **Open source.** Add your own games via the plugin system.
 
 ---
@@ -32,7 +33,7 @@ Most online gaming platforms require accounts, collect data, and expose players 
 
 ### Player identity
 
-When you first visit Ludus, your browser generates a random anonymous token and stores it in `localStorage`. This token is your identity — it lets you see your active games across sessions without logging in.
+When you first visit Ludus, your browser generates a random anonymous token (a UUID) and stores it in `localStorage`. This token is your only identity — it lets you see your active games across sessions without logging in. It is never stored in a cookie and never shared with other players.
 
 **Moving to another device?** Go to "My Token" in the top bar, and either copy the token string or scan the QR code on your other device. The QR encodes a URL that imports your token automatically when opened.
 
@@ -46,6 +47,10 @@ When you first visit Ludus, your browser generates a random anonymous token and 
 ### Turn notifications (optional)
 
 If you allow notifications, Ludus will send a browser push notification when it becomes your turn — even if the tab is closed. You will not be notified while you are actively viewing the game. This is opt-in per game and can be disabled at any time from the game page.
+
+### Install as an app
+
+Ludus is a Progressive Web App (PWA). On mobile you can add it to your home screen for a full-screen, app-like experience.
 
 ---
 
@@ -82,7 +87,10 @@ Add the printed values to your `.env` file, then restart: `docker compose up -d`
 | `REDIS_URL` | `redis://redis:6379` | Redis connection string |
 | `SESSION_TTL_DAYS` | `30` | Days until an inactive session expires |
 | `FINISHED_SESSION_TTL_DAYS` | `3` | Days a finished session remains viewable |
-| `LUDUS_DOMAIN` | `ludus.localhost` | Domain name for Traefik routing |
+| `LUDUS_DOMAIN` | `ludus.example.com` | Domain name for Traefik routing |
+| `TRAEFIK_NETWORK` | `web` | Docker network Traefik is attached to — set this when the container is on multiple networks |
+| `UID` | `1000` | User ID the container process runs as |
+| `GID` | `1000` | Group ID the container process runs as |
 | `VAPID_PRIVATE_KEY` | _(empty)_ | VAPID private key — push disabled if unset |
 | `VAPID_PUBLIC_KEY` | _(empty)_ | VAPID public key |
 | `VAPID_CONTACT_EMAIL` | `admin@example.com` | Contact email sent with push requests |
@@ -92,6 +100,8 @@ Add the printed values to your `.env` file, then restart: `docker compose up -d`
 ```bash
 docker compose pull && docker compose up -d
 ```
+
+> **Note:** The image uses the `latest` tag. If you use Portainer or a similar tool, trigger a "Pull and redeploy" to pick up the new image.
 
 ---
 
