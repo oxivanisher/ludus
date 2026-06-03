@@ -26,10 +26,10 @@ export const api = {
 
   publicSessions: () => request("/api/sessions/public"),
 
-  createSession: (game_slug, username, public_game = false) =>
+  createSession: (game_slug, username, public_game = false, vs_computer = false) =>
     request("/api/sessions", {
       method: "POST",
-      body: JSON.stringify({ game_slug, username, public: public_game }),
+      body: JSON.stringify({ game_slug, username, public: public_game, vs_computer }),
     }),
 
   getSession: (id) => request(`/api/sessions/${id}`),

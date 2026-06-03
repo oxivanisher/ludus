@@ -18,7 +18,10 @@
   let selectedSlug = $state("");
   let username = $state(getSavedUsername());
   let isPublic = $state(false);
+  let vsComputer = $state(false);
   let creating = $state(false);
+
+  const selectedGame = $derived(games.find(g => g.slug === selectedSlug) ?? null);
 
   let activeSessions = $derived(sessions.filter((s) => s.status !== "finished"));
   let hasFinished = $derived(sessions.some((s) => s.status === "finished"));
@@ -67,7 +70,7 @@
     try {
       const trimmed = username.trim();
       saveUsername(trimmed);
-      const session = await api.createSession(selectedSlug, trimmed, isPublic);
+      const session = await api.createSession(selectedSlug, trimmed, isPublic, vsComputer);
       onJoinGame(session.uuid);
     } catch (e) {
       error = e.message;
@@ -159,7 +162,7 @@
                      {selectedSlug === game.slug
                        ? 'border-indigo-600 bg-indigo-50 dark:border-indigo-500 dark:bg-indigo-900/30'
                        : ''}"
-              onclick={() => { selectedSlug = game.slug; }}
+              onclick={() => { selectedSlug = game.slug; vsComputer = false; }}
             >
               <div class="font-medium">{$_(`games.${game.slug}.name`, { default: game.name })}</div>
               <div class="text-xs text-gray-500 dark:text-gray-400">{$_(`games.${game.slug}.description`, { default: game.description })}</div>
@@ -168,10 +171,19 @@
         </div>
       </div>
 
-      <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer select-none">
-        <input type="checkbox" class="rounded" bind:checked={isPublic} />
-        {$_('lobby.create.public_label')}
-      </label>
+      {#if selectedGame?.supports_solo}
+        <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer select-none">
+          <input type="checkbox" class="rounded" bind:checked={vsComputer} onchange={() => { if (vsComputer) isPublic = false; }} />
+          {$_('lobby.create.vs_computer')}
+        </label>
+      {/if}
+
+      {#if !vsComputer}
+        <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer select-none">
+          <input type="checkbox" class="rounded" bind:checked={isPublic} />
+          {$_('lobby.create.public_label')}
+        </label>
+      {/if}
 
       <button
         class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"

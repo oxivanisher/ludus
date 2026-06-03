@@ -9,6 +9,7 @@ class GameMeta:
     description: str
     min_players: int
     max_players: int
+    supports_solo: bool = False
 
 
 class BaseGame(ABC):
@@ -57,3 +58,10 @@ class BaseGame(ABC):
         Default implementation returns the full state unchanged.
         """
         return state
+
+    def get_computer_action(self, state: dict, player: str) -> dict | None:
+        """
+        Return the computer's next action, or None if the computer has no move.
+        Override in games that support solo play (supports_solo=True).
+        """
+        return None

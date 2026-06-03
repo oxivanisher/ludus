@@ -1,4 +1,5 @@
 import copy
+import random
 from collections import Counter
 
 from ..base import BaseGame, GameMeta
@@ -23,13 +24,20 @@ class Mastermind(BaseGame):
         description="Set a secret color code or crack it before guesses run out.",
         min_players=2,
         max_players=2,
+        supports_solo=True,
     )
 
     def initial_state(self, players: list[str]) -> dict:
+        from core.session import COMPUTER_USERNAME
+        if COMPUTER_USERNAME in players:
+            code_maker = COMPUTER_USERNAME
+            code_breaker = next(p for p in players if p != COMPUTER_USERNAME)
+        else:
+            code_maker, code_breaker = players[0], players[1]
         return {
             "phase": "setting",
-            "code_maker": players[0],
-            "code_breaker": players[1],
+            "code_maker": code_maker,
+            "code_breaker": code_breaker,
             "secret_code": None,
             "guesses": [],
             "current_turn": players[0],
@@ -90,6 +98,11 @@ class Mastermind(BaseGame):
         if last["blacks"] == CODE_LENGTH:
             return state["code_breaker"]
         return state["code_maker"]
+
+    def get_computer_action(self, state: dict, player: str) -> dict | None:
+        if state.get("phase") == "setting" and player == state.get("code_maker"):
+            return {"type": "set_code", "colors": [random.choice(COLORS) for _ in range(CODE_LENGTH)]}
+        return None
 
     def render_state_for_player(self, state: dict, player: str) -> dict:
         if not state.get("phase"):

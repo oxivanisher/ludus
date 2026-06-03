@@ -51,6 +51,7 @@
       "username_placeholder": "Benutzername eingeben",
       "choose_game": "Spiel wählen",
       "public_label": "Öffentliches Spiel – jeder auf diesem Server kann beitreten",
+      "vs_computer": "Gegen den Computer spielen",
       "submit": "Erstellen & Einladungslink erhalten",
       "submitting": "Erstelle…"
     }

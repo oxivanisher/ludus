@@ -51,6 +51,7 @@
       "username_placeholder": "Enter a username",
       "choose_game": "Choose game",
       "public_label": "Public game — anyone on this server can join",
+      "vs_computer": "Play against the computer",
       "submit": "Create & Get Invite Link",
       "submitting": "Creating…"
     }

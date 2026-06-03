@@ -4,7 +4,7 @@ from fastapi import APIRouter, Header, HTTPException
 
 from core import connections, session as session_store
 from core.config import settings
-from core.plugin_loader import list_games
+from core.plugin_loader import get_game, list_games
 from models.schemas import (
     ActionRequest,
     CreateSessionRequest,
@@ -45,6 +45,7 @@ async def list_available_games():
             description=g.meta.description,
             min_players=g.meta.min_players,
             max_players=g.meta.max_players,
+            supports_solo=g.meta.supports_solo,
         )
         for g in list_games()
     ]
@@ -65,6 +66,18 @@ async def create_session(
     token = _require_token(x_player_token)
     try:
         session = await session_store.create_session(body.game_slug, body.username, token, body.public)
+        if body.vs_computer:
+            game = get_game(body.game_slug)
+            if not game or not game.meta.supports_solo:
+                raise ValueError("This game does not support playing against the computer.")
+            session = await session_store.join_session(
+                session["uuid"], session_store.COMPUTER_USERNAME, session_store.COMPUTER_TOKEN
+            )
+            computer_action = game.get_computer_action(session["state"], session_store.COMPUTER_USERNAME)
+            if computer_action:
+                session = await session_store.apply_action(
+                    session["uuid"], session_store.COMPUTER_TOKEN, computer_action
+                )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     return SessionResponse.from_session(session, token)

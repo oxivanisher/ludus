@@ -13,12 +13,14 @@ class GameInfo(BaseModel):
     description: str
     min_players: int
     max_players: int
+    supports_solo: bool = False
 
 
 class CreateSessionRequest(BaseModel):
     game_slug: str
     username: str
     public: bool = False
+    vs_computer: bool = False
 
 
 class JoinSessionRequest(BaseModel):

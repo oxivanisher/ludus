@@ -13,6 +13,9 @@ STAT_ACTIVE = "stats:active_games"
 STAT_TOTAL = "stats:total_games"
 STAT_WAITING = "stats:waiting_sessions"
 
+COMPUTER_TOKEN = "computer-player"
+COMPUTER_USERNAME = "Computer"
+
 
 async def get_stats() -> dict:
     r = await get_redis()

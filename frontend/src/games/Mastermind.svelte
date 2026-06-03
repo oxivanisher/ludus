@@ -63,9 +63,9 @@
   }
 
   function pegClass(g) {
-    if (g === 'black') return 'bg-gray-900 dark:bg-gray-100';
-    if (g === 'white') return 'bg-white border border-gray-400 dark:border-gray-500';
-    return 'bg-gray-300 dark:bg-gray-600';
+    if (g === 'black') return 'bg-gray-900';
+    if (g === 'white') return 'bg-white border-2 border-gray-500 dark:border-gray-400';
+    return 'border border-gray-300 dark:border-gray-600';
   }
 
   function buildPegs(blacks, whites) {
