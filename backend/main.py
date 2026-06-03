@@ -6,11 +6,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from api.metrics import router as metrics_router
 from api.push import router as push_router
 from api.sessions import router as sessions_router
 from api.websocket import router as ws_router
 from core.config import settings
-from core.metrics import start_metrics_server
 from core.plugin_loader import load_plugins
 from core.redis_client import close_redis
 
@@ -22,9 +22,8 @@ async def lifespan(app: FastAPI):
     logging.basicConfig(level=logging.INFO)
     logger.info("Ludus starting — commit %s", settings.git_commit)
     load_plugins()
-    start_metrics_server()
-    if settings.metrics_enabled:
-        logger.info("Prometheus metrics available on port %d", settings.metrics_port)
+    if settings.metrics_token:
+        logger.info("Prometheus metrics endpoint enabled at /metrics")
     yield
     await close_redis()
 
@@ -38,6 +37,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(metrics_router)
 app.include_router(sessions_router)
 app.include_router(push_router)
 app.include_router(ws_router)

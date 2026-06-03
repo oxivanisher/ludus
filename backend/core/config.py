@@ -21,10 +21,9 @@ class Settings(BaseSettings):
     max_active_sessions: int = 200
     max_public_sessions: int = 20
 
-    # Prometheus metrics — disabled by default; set METRICS_ENABLED=true to expose.
-    # Runs on a separate port so it can be firewalled independently.
-    metrics_enabled: bool = False
-    metrics_port: int = 9090
+    # Prometheus metrics — set to a long random secret to enable the /metrics endpoint.
+    # Leave empty to disable. Prometheus scrapes via bearer token over HTTPS (Traefik).
+    metrics_token: str = ""
 
     @property
     def session_ttl(self) -> int:

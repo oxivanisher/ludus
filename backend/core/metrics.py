@@ -2,16 +2,10 @@
 Prometheus metrics for Ludus.
 
 All metrics are pure aggregates — no per-player, per-session, or per-IP data.
-The metrics HTTP server runs on a dedicated port (METRICS_PORT) so it can be
-firewalled independently from the main application port.
+Exposed at GET /metrics (requires Bearer token; see METRICS_TOKEN in config).
 """
 
-import threading
-
 from prometheus_client import Counter, Gauge, Histogram
-from prometheus_client import start_http_server as _prom_start
-
-from .config import settings
 
 # ---------------------------------------------------------------------------
 # Sessions
@@ -106,20 +100,3 @@ push_stale_removed = Counter(
     "Stale push subscriptions removed (browser unsubscribed or expired)",
 )
 
-# ---------------------------------------------------------------------------
-# Server start
-# ---------------------------------------------------------------------------
-
-_started = False
-_lock = threading.Lock()
-
-
-def start_metrics_server() -> None:
-    global _started
-    if not settings.metrics_enabled:
-        return
-    with _lock:
-        if _started:
-            return
-        _prom_start(settings.metrics_port)
-        _started = True
