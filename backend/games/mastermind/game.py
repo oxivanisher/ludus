@@ -78,7 +78,7 @@ class Mastermind(BaseGame):
         return state
 
     def is_game_over(self, state: dict) -> bool:
-        if state["phase"] != "guessing" or not state["guesses"]:
+        if state.get("phase") != "guessing" or not state.get("guesses"):
             return False
         last = state["guesses"][-1]
         return last["blacks"] == CODE_LENGTH or len(state["guesses"]) >= MAX_GUESSES
@@ -92,6 +92,16 @@ class Mastermind(BaseGame):
         return state["code_maker"]
 
     def render_state_for_player(self, state: dict, player: str) -> dict:
+        if not state.get("phase"):
+            return {
+                "phase": "setting", "current_turn": None,
+                "code_maker": None, "code_breaker": None,
+                "secret_code": None, "guesses": [],
+                "guesses_remaining": MAX_GUESSES,
+                "max_guesses": MAX_GUESSES,
+                "code_length": CODE_LENGTH,
+                "colors": COLORS,
+            }
         game_over = self.is_game_over(state)
         is_code_maker = player == state["code_maker"]
         return {
