@@ -19,7 +19,7 @@ _registry: dict[str, dict[str, Any]] = {}
 def register(session_id: str, player_token: str, ws: Any) -> None:
     _registry.setdefault(session_id, {})[player_token] = ws
     metrics.websocket_connections.inc()
-    metrics.websocket_connections_total.inc()
+    metrics.websocket_connections_established_total.inc()
 
 
 def unregister(session_id: str, player_token: str) -> None:

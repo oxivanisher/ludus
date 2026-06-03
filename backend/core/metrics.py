@@ -82,8 +82,8 @@ websocket_connections = Gauge(
     "Currently active WebSocket connections",
 )
 
-websocket_connections_total = Counter(
-    "ludus_websocket_connections_total",
+websocket_connections_established_total = Counter(
+    "ludus_websocket_connections_established_total",
     "Total WebSocket connections established",
 )
 
