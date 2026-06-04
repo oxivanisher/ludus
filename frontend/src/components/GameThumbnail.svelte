@@ -124,6 +124,28 @@
     <div class="rounded bg-indigo-600"></div>
   </div>
 
+{:else if slug === 'gomoku'}
+  <svg viewBox="0 0 48 48" class="w-full h-full rounded-lg" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" fill="#DCB167" rx="6"/>
+    <!-- 5×5 mini grid, margin 4, cell 10 -->
+    <g stroke="#8B6425" stroke-width="0.75">
+      {#each [4, 14, 24, 34, 44] as p}
+        <line x1={p} y1="4" x2={p} y2="44"/>
+        <line x1="4" y1={p} x2="44" y2={p}/>
+      {/each}
+    </g>
+    <!-- Star point at center -->
+    <circle cx="24" cy="24" r="1.5" fill="#8B6425"/>
+    <!-- Black stones -->
+    <circle cx="14" cy="14" r="5" fill="#111" stroke="#444" stroke-width="0.5"/>
+    <circle cx="24" cy="24" r="5" fill="#111" stroke="#444" stroke-width="0.5"/>
+    <circle cx="34" cy="34" r="5" fill="#111" stroke="#444" stroke-width="0.5"/>
+    <!-- White stones -->
+    <circle cx="24" cy="14" r="5" fill="#f5f5f5" stroke="#aaa" stroke-width="0.5"/>
+    <circle cx="14" cy="24" r="5" fill="#f5f5f5" stroke="#aaa" stroke-width="0.5"/>
+    <circle cx="34" cy="24" r="5" fill="#f5f5f5" stroke="#aaa" stroke-width="0.5"/>
+  </svg>
+
 {:else}
   <div class="w-full h-full rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-2xl select-none">
     🎮

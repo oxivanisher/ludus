@@ -1,0 +1,15 @@
+{
+  "games": {
+    "gomoku": {
+      "name": "Gomoku",
+      "description": "Setze Steine, um fünf in einer Reihe zu bilden. Wer zuerst fünf verbindet, gewinnt.",
+      "you_are_black": "Du spielst Schwarz",
+      "you_are_white": "Du spielst Weiß",
+      "black_label": "Schwarz",
+      "white_label": "Weiß",
+      "hint_place": "Du bist dran — klicke eine Kreuzung, um einen Stein zu setzen",
+      "hint_wait": "Warte auf {player}…",
+      "how_to_play": "Schwarz setzt den ersten Stein. Spieler setzen abwechselnd einen Stein auf eine freie Kreuzung.\nWer als Erster fünf oder mehr Steine in einer ununterbrochenen Reihe hat, gewinnt — waagerecht, senkrecht oder diagonal.\nEs gibt keine Schlagregeln und keine Einschränkungen — einfach setzen und verbinden.\nDenke voraus: baue eigene Drohungen auf und blockiere gleichzeitig den Gegner.\nIst das Brett voll ohne Fünferreihe, endet das Spiel unentschieden (sehr selten)."
+    }
+  }
+}

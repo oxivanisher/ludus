@@ -1,0 +1,15 @@
+{
+  "games": {
+    "gomoku": {
+      "name": "Gomoku",
+      "description": "Place stones to get five in a row. First to connect five wins.",
+      "you_are_black": "You are Black",
+      "you_are_white": "You are White",
+      "black_label": "Black",
+      "white_label": "White",
+      "hint_place": "Your turn — click an intersection to place a stone",
+      "hint_wait": "Waiting for {player}…",
+      "how_to_play": "Black places the first stone. Players alternate placing one stone per turn on any empty intersection.\nThe first player to form an unbroken line of five or more stones wins — horizontally, vertically, or diagonally.\nThere are no captures and no restrictions — simply place and connect.\nThink ahead: build your own threats while blocking your opponent's.\nIf the board fills with no five-in-a-row the game is a draw (very rare)."
+    }
+  }
+}
