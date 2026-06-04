@@ -1,0 +1,15 @@
+{
+  "games": {
+    "mancala": {
+      "name": "Mancala",
+      "description": "Sow stones around the board. Capture and collect — most in your store wins.",
+      "hint_pick": "Your turn — click one of your pits",
+      "hint_extra": "Extra turn! Click again",
+      "hint_wait": "Waiting for {player}…",
+      "hint_computer": "Computer is thinking…",
+      "store": "Store",
+      "stones": "{n} stones",
+      "how_to_play": "Each player owns 6 pits (bottom row for Player 1, top row for Player 2) and a store on their right. Stones start at 4 per pit.\nOn your turn, pick any non-empty pit on your side — all stones are scooped and sown counter-clockwise, one per pit. Your own store counts; your opponent's does not.\nIf your last stone lands in your store, take another turn.\nIf your last stone lands in an empty pit on your side and the pit directly opposite has stones, capture all of them into your store.\nWhen all pits on one side are empty the game ends — the other player sweeps their remaining stones into their store. Most stones in store wins."
+    }
+  }
+}

@@ -13,6 +13,7 @@
   import Reversi from "../games/Reversi.svelte";
   import Memory from "../games/Memory.svelte";
   import Gomoku from "../games/Gomoku.svelte";
+  import Mancala from "../games/Mancala.svelte";
 
   const GAME_COMPONENTS = {
     tictactoe: TicTacToe,
@@ -23,6 +24,7 @@
     reversi: Reversi,
     memory: Memory,
     gomoku: Gomoku,
+    mancala: Mancala,
   };
 
   let { sessionId, onBack, onJoinGame } = $props();

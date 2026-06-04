@@ -76,6 +76,29 @@ async def websocket_endpoint(
                     for tok, ws in connections.get_sockets(session_id).items():
                         response = SessionResponse.from_session(updated, tok)
                         await _send(ws, {"type": "state", "session": response.model_dump()})
+
+                    # If it's now the computer's turn, apply its action(s) in a loop
+                    # (loop handles bonus turns, e.g. Mancala landing on own store)
+                    if updated.get("vs_computer") and updated.get("status") == "playing":
+                        from core.plugin_loader import get_game
+                        game_plugin = get_game(updated["game_slug"])
+                        safety = 0
+                        while (safety < 20
+                               and game_plugin
+                               and updated.get("status") == "playing"
+                               and updated.get("current_turn") == session_store.COMPUTER_USERNAME):
+                            safety += 1
+                            computer_action = game_plugin.get_computer_action(
+                                updated["state"], session_store.COMPUTER_USERNAME
+                            )
+                            if not computer_action:
+                                break
+                            updated = await session_store.apply_action(
+                                session_id, session_store.COMPUTER_TOKEN, computer_action
+                            )
+                            for tok, ws in connections.get_sockets(session_id).items():
+                                response = SessionResponse.from_session(updated, tok)
+                                await _send(ws, {"type": "state", "session": response.model_dump()})
                 except ValueError as e:
                     await _send(websocket, {"type": "error", "message": str(e)})
 

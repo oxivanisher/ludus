@@ -1,0 +1,15 @@
+{
+  "games": {
+    "mancala": {
+      "name": "Mancala",
+      "description": "Verteile Steine rund ums Brett. Erbeute und sammle — wer mehr im Kalah hat, gewinnt.",
+      "hint_pick": "Du bist dran — klicke eine deiner Mulden",
+      "hint_extra": "Nochmal! Wähle eine weitere Mulde",
+      "hint_wait": "Warte auf {player}…",
+      "hint_computer": "Computer überlegt…",
+      "store": "Kalah",
+      "stones": "{n} Steine",
+      "how_to_play": "Jeder Spieler besitzt 6 Mulden (untere Reihe für Spieler 1, obere für Spieler 2) und ein Kalah rechts davon. Start: 4 Steine pro Mulde.\nNimm alle Steine aus einer deiner Mulden und verteile sie gegen den Uhrzeigersinn, einen pro Feld. Dein Kalah zählt; das des Gegners wird übersprungen.\nLandet der letzte Stein in deinem Kalah, darfst du nochmal ziehen.\nLandet er in einer leeren eigenen Mulde und die gegenüberliegende hat Steine, werden alle in dein Kalah erbeutet.\nSind alle Mulden einer Seite leer, endet das Spiel — der andere Spieler sammelt seine verbleibenden Steine ins Kalah. Wer mehr hat, gewinnt."
+    }
+  }
+}

@@ -124,6 +124,28 @@
     <div class="rounded bg-indigo-600"></div>
   </div>
 
+{:else if slug === 'mancala'}
+  <!-- Mancala: wooden board with two rows of pits and stores on sides -->
+  <svg viewBox="0 0 48 48" class="w-full h-full rounded-lg" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" fill="#DCB167" rx="6"/>
+    <!-- Left store -->
+    <rect x="1" y="6" width="8" height="36" rx="4" fill="#c49a3a"/>
+    <text x="5" y="26" text-anchor="middle" dominant-baseline="middle" font-size="6" font-weight="bold" fill="#7a5c10">8</text>
+    <!-- Right store -->
+    <rect x="39" y="6" width="8" height="36" rx="4" fill="#c49a3a"/>
+    <text x="43" y="26" text-anchor="middle" dominant-baseline="middle" font-size="6" font-weight="bold" fill="#7a5c10">6</text>
+    <!-- Top row pits (P1): 6 circles -->
+    {#each [11, 18, 25, 32] as cx}
+      <circle {cx} cy="16" r="4.5" fill="#c49a3a"/>
+      <text x={cx} y="16" text-anchor="middle" dominant-baseline="middle" font-size="5" font-weight="bold" fill="#7a5c10">4</text>
+    {/each}
+    <!-- Bottom row pits (P0): 6 circles -->
+    {#each [11, 18, 25, 32] as cx}
+      <circle {cx} cy="32" r="4.5" fill="#c49a3a"/>
+      <text x={cx} y="32" text-anchor="middle" dominant-baseline="middle" font-size="5" font-weight="bold" fill="#7a5c10">4</text>
+    {/each}
+  </svg>
+
 {:else if slug === 'gomoku'}
   <svg viewBox="0 0 48 48" class="w-full h-full rounded-lg" xmlns="http://www.w3.org/2000/svg">
     <rect width="48" height="48" fill="#DCB167" rx="6"/>
