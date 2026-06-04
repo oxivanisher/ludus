@@ -19,6 +19,7 @@ Play with anyone, on any device — no accounts, no tracking, no chat.
 | Memory | 2 | Flip cards to find matching pairs — most pairs wins |
 | Gomoku | 2 | Place stones on a 15×15 grid — first to connect five wins |
 | Mancala | 2 | Sow stones around the board — most stones in your store wins (supports vs computer) |
+| Dots & Boxes | 2 | Draw lines to complete boxes — most boxes wins (supports vs computer) |
 
 ---
 

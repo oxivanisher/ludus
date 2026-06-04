@@ -14,6 +14,7 @@
   import Memory from "../games/Memory.svelte";
   import Gomoku from "../games/Gomoku.svelte";
   import Mancala from "../games/Mancala.svelte";
+  import DotsAndBoxes from "../games/DotsAndBoxes.svelte";
 
   const GAME_COMPONENTS = {
     tictactoe: TicTacToe,
@@ -25,6 +26,7 @@
     memory: Memory,
     gomoku: Gomoku,
     mancala: Mancala,
+    dots_and_boxes: DotsAndBoxes,
   };
 
   let { sessionId, onBack, onJoinGame } = $props();

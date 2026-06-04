@@ -124,6 +124,33 @@
     <div class="rounded bg-indigo-600"></div>
   </div>
 
+{:else if slug === 'dots_and_boxes'}
+  <!-- 3×3 dots, some lines drawn, one amber box and one indigo box -->
+  <svg viewBox="0 0 48 48" class="w-full h-full rounded-lg bg-gray-50 dark:bg-gray-900" xmlns="http://www.w3.org/2000/svg">
+    <!-- Box fills -->
+    <rect x="7" y="7" width="14" height="14" fill="rgba(245,158,11,0.22)"/>
+    <rect x="27" y="27" width="14" height="14" fill="rgba(99,102,241,0.22)"/>
+    <!-- Drawn lines: amber box (0,0) fully closed -->
+    <line x1="6" y1="6"  x2="22" y2="6"  stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <line x1="6" y1="22" x2="22" y2="22" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <line x1="6" y1="6"  x2="6"  y2="22" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <line x1="22" y1="6" x2="22" y2="22" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <!-- Indigo box (1,1) fully closed -->
+    <line x1="26" y1="26" x2="42" y2="26" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="26" y1="42" x2="42" y2="42" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="26" y1="26" x2="26" y2="42" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="42" y1="26" x2="42" y2="42" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+    <!-- A couple of open lines -->
+    <line x1="22" y1="6"  x2="42" y2="6"  stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+    <line x1="6"  y1="42" x2="26" y2="42" stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>
+    <!-- Dots -->
+    {#each [6, 22, 42] as x}
+      {#each [6, 22, 42] as y}
+        <circle cx={x} cy={y} r="3" fill="#374151"/>
+      {/each}
+    {/each}
+  </svg>
+
 {:else if slug === 'mancala'}
   <!-- Mancala: wooden board with two rows of pits and stores on sides -->
   <svg viewBox="0 0 48 48" class="w-full h-full rounded-lg" xmlns="http://www.w3.org/2000/svg">

@@ -1,0 +1,14 @@
+{
+  "games": {
+    "dots_and_boxes": {
+      "name": "Dots & Boxes",
+      "description": "Draw lines to complete boxes. Complete a box to score a point and go again.",
+      "hint_draw": "Your turn — click a line to draw",
+      "hint_extra": "You scored! Go again",
+      "hint_wait": "Waiting for {player}…",
+      "hint_computer": "Computer is thinking…",
+      "score": "{n} {n, plural, one {box} other {boxes}}",
+      "how_to_play": "Players take turns drawing one line segment between two adjacent dots — horizontally or vertically.\nIf your line completes the fourth side of a box, you claim it, score a point, and take another turn.\nYou can keep going as long as you keep completing boxes.\nWhen all lines are drawn the player with more boxes wins.\nTip: avoid drawing the third side of a box — you're handing your opponent a free score."
+    }
+  }
+}

@@ -137,6 +137,8 @@ class Mancala(BaseGame):
         return None
 
     def get_computer_action(self, state: dict, player: str) -> dict | None:
+        if state.get("current_turn") != player:
+            return None
         player_idx = self._player_idx(state, player)
         own_store = STORE_0 if player_idx == 0 else STORE_1
         opp_store = STORE_1 if player_idx == 0 else STORE_0

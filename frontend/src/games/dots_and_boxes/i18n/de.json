@@ -1,0 +1,14 @@
+{
+  "games": {
+    "dots_and_boxes": {
+      "name": "Käsekästchen",
+      "description": "Zeichne Linien, um Kästchen zu vollenden. Wer ein Kästchen schließt, punktet und zieht erneut.",
+      "hint_draw": "Du bist dran — klicke eine Linie",
+      "hint_extra": "Punkt! Nochmal ziehen",
+      "hint_wait": "Warte auf {player}…",
+      "hint_computer": "Computer überlegt…",
+      "score": "{n} {n, plural, one {Kästchen} other {Kästchen}}",
+      "how_to_play": "Spieler ziehen abwechselnd eine Linie zwischen zwei benachbarten Punkten — waagerecht oder senkrecht.\nSchließt deine Linie die vierte Seite eines Kästchens, nimmst du es, bekommst einen Punkt und ziehst nochmal.\nSolange du Kästchen schließt, darfst du weiterziehen.\nWer am Ende mehr Kästchen hat, gewinnt.\nTipp: Vermeide es, die dritte Seite eines Kästchens zu zeichnen — sonst schenkt du dem Gegner einen Punkt."
+    }
+  }
+}
