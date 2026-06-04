@@ -1,5 +1,6 @@
 <script>
   import { _ } from 'svelte-i18n';
+  import GameThumbnail from './GameThumbnail.svelte';
 
   let { session, onClick } = $props();
 
@@ -20,12 +21,16 @@
 </script>
 
 <button
-  class="w-full text-left p-4 border rounded-lg transition-colors flex items-center justify-between gap-3
+  class="w-full text-left p-4 border rounded-lg transition-colors flex items-center gap-3
          border-gray-200 hover:border-indigo-400 hover:bg-indigo-50
          dark:border-gray-700 dark:hover:border-indigo-500 dark:hover:bg-indigo-900/20"
   onclick={onClick}
 >
-  <div>
+  <div class="w-10 h-10 shrink-0">
+    <GameThumbnail slug={session.game_slug} />
+  </div>
+
+  <div class="flex-1 min-w-0">
     <div class="font-medium">{$_(`games.${session.game_slug}.name`, { default: session.game_slug })}</div>
     <div class="text-sm text-gray-500 dark:text-gray-400">
       {#if isParticipant}
@@ -37,7 +42,7 @@
     <div class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{elapsedLabel}</div>
   </div>
 
-  <div class="shrink-0 text-sm font-medium">
+  <div class="shrink-0 text-sm font-medium ml-auto">
     {#if session.status === "finished"}
       <span class="text-gray-500 dark:text-gray-400">{$_('game_card.status_finished')}</span>
     {:else if session.status === "waiting"}

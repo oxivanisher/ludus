@@ -4,6 +4,7 @@
   import { api } from "../lib/api.js";
   import { getSavedUsername, saveUsername } from "../lib/username.js";
   import GameCard from "../components/GameCard.svelte";
+  import GameThumbnail from "../components/GameThumbnail.svelte";
 
   let { onJoinGame, onHistory } = $props();
 
@@ -164,7 +165,12 @@
                        : ''}"
               onclick={() => { selectedSlug = game.slug; vsComputer = false; }}
             >
-              <div class="font-medium">{$_(`games.${game.slug}.name`, { default: game.name })}</div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <div class="w-8 h-8 shrink-0">
+                  <GameThumbnail slug={game.slug} />
+                </div>
+                <div class="font-medium leading-tight">{$_(`games.${game.slug}.name`, { default: game.name })}</div>
+              </div>
               <div class="text-xs text-gray-500 dark:text-gray-400">{$_(`games.${game.slug}.description`, { default: game.description })}</div>
             </button>
           {/each}
