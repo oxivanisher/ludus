@@ -1,0 +1,15 @@
+{
+  "games": {
+    "memory": {
+      "name": "Memory",
+      "description": "Flip cards to find matching pairs. The player with the most pairs wins.",
+      "hint_first": "Your turn — flip any card",
+      "hint_second": "Now flip a second card",
+      "hint_wait_first": "Waiting for {player}…",
+      "hint_wait_second": "{player} is choosing their second card…",
+      "pair": "{n, plural, one {# pair} other {# pairs}}",
+      "pairs_remaining": "{n} pairs left",
+      "how_to_play": "Cards are laid face-down in a 4×4 grid. Players take turns.\nOn your turn, flip any two face-down cards one at a time.\nIf the two cards match, they stay face-up and you take another turn.\nIf they don't match, both flip back face-down and the other player goes.\nThe player who collects the most matching pairs wins."
+    }
+  }
+}

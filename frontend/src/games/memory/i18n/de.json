@@ -1,0 +1,15 @@
+{
+  "games": {
+    "memory": {
+      "name": "Memory",
+      "description": "Decke Karten auf, um passende Paare zu finden. Wer die meisten Paare sammelt, gewinnt.",
+      "hint_first": "Du bist dran — decke eine beliebige Karte auf",
+      "hint_second": "Jetzt eine zweite Karte aufdecken",
+      "hint_wait_first": "Warte auf {player}…",
+      "hint_wait_second": "{player} wählt die zweite Karte…",
+      "pair": "{n, plural, one {# Paar} other {# Paare}}",
+      "pairs_remaining": "{n} Paare übrig",
+      "how_to_play": "Die Karten liegen verdeckt in einem 4×4 Raster. Die Spieler wechseln sich ab.\nDecke in deinem Zug zwei verdeckte Karten nacheinander auf.\nStimmen die Karten überein, bleiben sie offen liegen und du ziehst nochmal.\nStimmen sie nicht überein, werden beide wieder umgedreht und der andere Spieler ist dran.\nWer am Ende die meisten Paare gesammelt hat, gewinnt."
+    }
+  }
+}

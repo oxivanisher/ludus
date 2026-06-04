@@ -16,6 +16,7 @@ Play with anyone, on any device — no accounts, no tracking, no chat.
 | Mastermind | 2 | Set a secret color code or crack it before guesses run out |
 | Mill | 2 | Place and move pieces to form mills of three — remove opponent pieces to win |
 | Reversi | 2 | Flip your opponent's pieces to claim the board — most pieces wins |
+| Memory | 2 | Flip cards to find matching pairs — most pairs wins |
 
 ---
 

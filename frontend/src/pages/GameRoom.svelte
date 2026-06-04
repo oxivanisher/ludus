@@ -11,6 +11,7 @@
   import Mastermind from "../games/Mastermind.svelte";
   import Mill from "../games/Mill.svelte";
   import Reversi from "../games/Reversi.svelte";
+  import Memory from "../games/Memory.svelte";
 
   const GAME_COMPONENTS = {
     tictactoe: TicTacToe,
@@ -19,6 +20,7 @@
     mastermind: Mastermind,
     mill: Mill,
     reversi: Reversi,
+    memory: Memory,
   };
 
   let { sessionId, onBack, onJoinGame } = $props();
