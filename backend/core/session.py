@@ -1,4 +1,5 @@
 import json
+import logging
 import time
 import uuid
 
@@ -6,6 +7,8 @@ from . import metrics
 from .config import settings
 from .plugin_loader import get_game
 from .redis_client import get_redis
+
+logger = logging.getLogger("ludus.session")
 
 SESSION_PREFIX = "session:"
 PLAYER_PREFIX = "player:"
@@ -16,6 +19,35 @@ STAT_WAITING = "stats:waiting_sessions"
 
 COMPUTER_TOKEN = "computer-player"
 COMPUTER_USERNAME = "Computer"
+
+
+async def reconcile_stats() -> None:
+    """Recount waiting/active sessions from actual Redis keys.
+
+    Called at startup to fix counters that drifted due to TTL-based expiry
+    (expired sessions are never manually decremented).
+    """
+    r = await get_redis()
+    waiting = 0
+    active = 0
+    cursor = 0
+    while True:
+        cursor, keys = await r.scan(cursor, match=f"{SESSION_PREFIX}*", count=200)
+        for key in keys:
+            raw = await r.get(key)
+            if raw:
+                try:
+                    s = json.loads(raw)
+                    if s["status"] == "waiting":
+                        waiting += 1
+                    elif s["status"] == "playing":
+                        active += 1
+                except Exception:
+                    pass
+        if cursor == 0:
+            break
+    await r.mset({STAT_WAITING: waiting, STAT_ACTIVE: active})
+    logger.info("Stats reconciled: waiting=%d active=%d", waiting, active)
 
 
 async def get_stats() -> dict:
@@ -142,9 +174,13 @@ async def join_session(session_id: str, username: str, player_token: str) -> dic
     await save_session(session)
 
     r = await get_redis()
+    creator_token = session["players"][0]["token"]
     pipe = r.pipeline()
     pipe.sadd(f"{PLAYER_PREFIX}{player_token}:sessions", session_id)
     pipe.expire(f"{PLAYER_PREFIX}{player_token}:sessions", settings.session_ttl)
+    # Also refresh the creator's set so it doesn't expire while the session is live
+    if player_token != creator_token:
+        pipe.expire(f"{PLAYER_PREFIX}{creator_token}:sessions", settings.session_ttl)
     if game_starting:
         pipe.decr(STAT_WAITING)
         pipe.incr(STAT_ACTIVE)
@@ -172,6 +208,8 @@ async def apply_action(session_id: str, player_token: str, action: dict) -> dict
 
     username = player_entry["username"]
     game = get_game(session["game_slug"])
+    if game is None:
+        raise ValueError("Game plugin missing")
 
     if not game.validate_action(session["state"], username, action):
         raise ValueError("Invalid action")

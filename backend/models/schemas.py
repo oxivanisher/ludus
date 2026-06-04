@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class StatsResponse(BaseModel):
     active_games: int
     total_games: int
+    waiting_games: int = 0
     git_commit: str = "dev"
 
 

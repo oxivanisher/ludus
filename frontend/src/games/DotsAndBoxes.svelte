@@ -112,7 +112,8 @@
         {:else}
           <!-- Hit area -->
           {#if isMyTurn}
-            <rect x={x1} y={y - HIT} width={CELL} height={HIT * 2}
+            <!-- Inset by HIT on each side so horizontal and vertical hit areas never overlap at dot intersections -->
+            <rect x={x1 + HIT} y={y - HIT} width={CELL - 2 * HIT} height={HIT * 2}
               fill="transparent" class="cursor-pointer"
               onclick={() => drawLine('h', r, c)}
               onmouseenter={() => { hover = {o:'h', r, c}; }}
@@ -148,7 +149,8 @@
             pointer-events="none"/>
         {:else}
           {#if isMyTurn}
-            <rect x={x - HIT} y={y1} width={HIT * 2} height={CELL}
+            <!-- Inset by HIT on each side so vertical and horizontal hit areas never overlap at dot intersections -->
+            <rect x={x - HIT} y={y1 + HIT} width={HIT * 2} height={CELL - 2 * HIT}
               fill="transparent" class="cursor-pointer"
               onclick={() => drawLine('v', r, c)}
               onmouseenter={() => { hover = {o:'v', r, c}; }}

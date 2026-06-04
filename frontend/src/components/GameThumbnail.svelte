@@ -115,11 +115,11 @@
 
 {:else if slug === 'memory'}
   <!-- 3×2 grid: face-down (indigo) and face-up (white + emoji) cards -->
-  <div class="w-full h-full rounded-lg bg-slate-200 grid grid-cols-3 gap-[3px] p-[4px]">
+  <div class="w-full h-full rounded-lg bg-slate-200 grid grid-cols-3 grid-rows-2 gap-[3px] p-[4px] overflow-hidden">
     <div class="rounded bg-indigo-600"></div>
-    <div class="rounded bg-white border border-slate-200 flex items-center justify-center text-[10px]">🐶</div>
+    <div class="rounded bg-white border border-slate-200 flex items-center justify-center text-[10px] leading-none">🐶</div>
     <div class="rounded bg-indigo-600"></div>
-    <div class="rounded bg-white border border-slate-200 flex items-center justify-center text-[10px]">🐶</div>
+    <div class="rounded bg-white border border-slate-200 flex items-center justify-center text-[10px] leading-none">🐶</div>
     <div class="rounded bg-indigo-600"></div>
     <div class="rounded bg-indigo-600"></div>
   </div>

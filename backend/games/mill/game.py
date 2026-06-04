@@ -217,10 +217,14 @@ class Mill(BaseGame):
     def get_winner(self, state: dict) -> str | None:
         board = state["board"]
         counts = state["counts"]
+
+        def _is_beaten(p: str) -> bool:
+            return counts[p] < 3 or not _can_move(board, p, counts[p] == 3)
+
+        beaten = [p for p in state["players"] if _is_beaten(p)]
+        if len(beaten) == len(state["players"]):
+            return None  # mutual stalemate — draw
         for p in state["players"]:
-            opponent = self._opponent(state, p)
-            if counts[opponent] < 3:
-                return p
-            if not _can_move(board, opponent, counts[opponent] == 3):
+            if _is_beaten(self._opponent(state, p)):
                 return p
         return None

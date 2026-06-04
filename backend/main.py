@@ -13,6 +13,7 @@ from api.websocket import router as ws_router
 from core.config import settings
 from core.plugin_loader import load_plugins
 from core.redis_client import close_redis
+from core.session import reconcile_stats
 
 logger = logging.getLogger("ludus")
 
@@ -22,6 +23,7 @@ async def lifespan(app: FastAPI):
     logging.basicConfig(level=logging.INFO)
     logger.info("Ludus starting — commit %s", settings.git_commit)
     load_plugins()
+    await reconcile_stats()
     if settings.metrics_token:
         logger.info("Prometheus metrics endpoint enabled at /metrics")
     yield

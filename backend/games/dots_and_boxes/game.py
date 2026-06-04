@@ -109,6 +109,10 @@ class DotsAndBoxes(BaseGame):
             state["extra_turn"] = False
             state["current_turn"] = opp
 
+        # extra_turn has no meaning once all lines are drawn
+        if state["lines_drawn"] >= MAX_LINES:
+            state["extra_turn"] = False
+
         return state
 
     def is_game_over(self, state: dict) -> bool:

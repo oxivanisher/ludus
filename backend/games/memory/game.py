@@ -115,4 +115,10 @@ class Memory(BaseGame):
             state["cards"][i] if state["face_up"][i] or state["matched"][i] else None
             for i in range(NUM_CARDS)
         ]
+        # Hide last_mismatch_values from the player who is about to take their
+        # turn — they shouldn't be able to poll the API to map the board without
+        # actually flipping cards. The player who just mismatched sees the values
+        # in the live WS broadcast; once the turn passes they should not.
+        if state.get("current_turn") == player:
+            result["last_mismatch_values"] = None
         return result

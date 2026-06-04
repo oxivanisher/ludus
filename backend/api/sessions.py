@@ -1,4 +1,5 @@
 import json
+import logging
 
 from fastapi import APIRouter, Header, HTTPException
 
@@ -14,6 +15,7 @@ from models.schemas import (
     StatsResponse,
 )
 
+logger = logging.getLogger("ludus.api")
 router = APIRouter(prefix="/api")
 
 
@@ -64,12 +66,15 @@ async def create_session(
     x_player_token: str | None = Header(default=None),
 ):
     token = _require_token(x_player_token)
+    # Validate supports_solo BEFORE writing anything to Redis (fix: orphan session)
+    if body.vs_computer:
+        game = get_game(body.game_slug)
+        if not game or not game.meta.supports_solo:
+            raise HTTPException(status_code=400, detail="This game does not support playing against the computer.")
     try:
         session = await session_store.create_session(body.game_slug, body.username, token, body.public, body.vs_computer)
         if body.vs_computer:
-            game = get_game(body.game_slug)
-            if not game or not game.meta.supports_solo:
-                raise ValueError("This game does not support playing against the computer.")
+            game = get_game(body.game_slug)  # already validated above
             session = await session_store.join_session(
                 session["uuid"], session_store.COMPUTER_USERNAME, session_store.COMPUTER_TOKEN
             )
@@ -142,8 +147,45 @@ async def perform_action(
     x_player_token: str | None = Header(default=None),
 ):
     token = _require_token(x_player_token)
+    if token == session_store.COMPUTER_TOKEN:
+        raise HTTPException(status_code=403, detail="Forbidden")
     try:
         session = await session_store.apply_action(session_id, token, body.action)
+
+        # Follow up with computer turn(s) if needed (mirrors WebSocket handler)
+        if session.get("vs_computer") and session.get("status") == "playing":
+            game = get_game(session["game_slug"])
+            safety = 0
+            while (safety < 20 and game and
+                   session.get("status") == "playing" and
+                   session.get("current_turn") == session_store.COMPUTER_USERNAME):
+                safety += 1
+                computer_action = game.get_computer_action(
+                    session["state"], session_store.COMPUTER_USERNAME
+                )
+                if not computer_action:
+                    break
+                try:
+                    session = await session_store.apply_action(
+                        session_id, session_store.COMPUTER_TOKEN, computer_action
+                    )
+                except ValueError as e:
+                    logger.error("Computer action failed in session %s: %s", session_id, e)
+                    break
+
+            if (session.get("status") == "playing" and
+                    session.get("current_turn") == session_store.COMPUTER_USERNAME):
+                logger.error("Computer stuck in session %s; forfeiting to human", session_id)
+                session = await session_store.forfeit_session(session_id, session_store.COMPUTER_TOKEN)
+
+        # Broadcast updated state to any WebSocket watchers
+        for tok, ws in connections.get_sockets(session_id).items():
+            viewer = SessionResponse.from_session(session, tok)
+            try:
+                await ws.send_text(json.dumps({"type": "state", "session": viewer.model_dump()}))
+            except Exception:
+                pass
+
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     return SessionResponse.from_session(session, token)

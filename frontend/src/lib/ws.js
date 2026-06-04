@@ -2,7 +2,9 @@ import { getToken } from "./token.js";
 
 export function createGameSocket(sessionId, { onState, onError, onCancelled }) {
   const protocol = location.protocol === "https:" ? "wss" : "ws";
-  const url = `${protocol}://${location.host}/ws/${sessionId}?token=${encodeURIComponent(getToken())}`;
+  // Token is sent in the first "identify" message rather than the URL so it
+  // doesn't appear in server access logs.
+  const url = `${protocol}://${location.host}/ws/${sessionId}`;
   let ws;
   let dead = false;
   let paused = false;
@@ -11,7 +13,9 @@ export function createGameSocket(sessionId, { onState, onError, onCancelled }) {
   function connect() {
     ws = new WebSocket(url);
 
-    ws.onopen = () => {};
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ type: "identify", token: getToken() }));
+    };
 
     ws.onmessage = (event) => {
       const msg = JSON.parse(event.data);
