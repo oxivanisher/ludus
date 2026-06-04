@@ -330,8 +330,13 @@ async def create_rematch(session_id: str, player_token: str) -> tuple[dict, dict
     if game is None:
         raise ValueError("Game plugin missing")
 
-    reversed_players = list(reversed(session["players"]))
-    usernames = [p["username"] for p in reversed_players]
+    # Alternate first player for human vs human. For vs-computer keep the human
+    # first — the computer's opening action is triggered separately by the API.
+    if session.get("vs_computer", False):
+        new_players = list(session["players"])
+    else:
+        new_players = list(reversed(session["players"]))
+    usernames = [p["username"] for p in new_players]
 
     now = time.time()
     new_session_id = str(uuid.uuid4())
@@ -341,7 +346,7 @@ async def create_rematch(session_id: str, player_token: str) -> tuple[dict, dict
         "status": "playing",
         "public": False,
         "vs_computer": session.get("vs_computer", False),
-        "players": reversed_players,
+        "players": new_players,
         "current_turn": usernames[0],
         "state": game.initial_state(usernames),
         "winner": None,
@@ -358,7 +363,7 @@ async def create_rematch(session_id: str, player_token: str) -> tuple[dict, dict
     pipe = r.pipeline()
     pipe.set(f"{SESSION_PREFIX}{new_session_id}", json.dumps(new_session), ex=settings.session_ttl)
     pipe.set(f"{SESSION_PREFIX}{session_id}", json.dumps(session), ex=settings.finished_session_ttl)
-    for p in reversed_players:
+    for p in new_players:
         pipe.sadd(f"{PLAYER_PREFIX}{p['token']}:sessions", new_session_id)
         pipe.expire(f"{PLAYER_PREFIX}{p['token']}:sessions", settings.session_ttl)
     pipe.incr(STAT_ACTIVE)

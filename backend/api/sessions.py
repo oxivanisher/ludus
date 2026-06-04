@@ -178,6 +178,16 @@ async def rematch(
     token = _require_token(x_player_token)
     try:
         old_session, new_session = await session_store.create_rematch(session_id, token)
+        if new_session.get("vs_computer"):
+            game = get_game(new_session["game_slug"])
+            if game:
+                computer_action = game.get_computer_action(
+                    new_session["state"], session_store.COMPUTER_USERNAME
+                )
+                if computer_action:
+                    new_session = await session_store.apply_action(
+                        new_session["uuid"], session_store.COMPUTER_TOKEN, computer_action
+                    )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
