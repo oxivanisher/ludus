@@ -10,6 +10,7 @@
   import Battleship from "../games/Battleship.svelte";
   import Mastermind from "../games/Mastermind.svelte";
   import Mill from "../games/Mill.svelte";
+  import Reversi from "../games/Reversi.svelte";
 
   const GAME_COMPONENTS = {
     tictactoe: TicTacToe,
@@ -17,6 +18,7 @@
     battleship: Battleship,
     mastermind: Mastermind,
     mill: Mill,
+    reversi: Reversi,
   };
 
   let { sessionId, onBack, onJoinGame } = $props();

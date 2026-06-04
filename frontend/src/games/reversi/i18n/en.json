@@ -1,0 +1,18 @@
+{
+  "games": {
+    "reversi": {
+      "name": "Reversi",
+      "description": "Flip your opponent's pieces to claim the board. Most pieces when the board fills wins.",
+      "you_are_dark": "You are Dark",
+      "you_are_light": "You are Light",
+      "dark_label": "Dark",
+      "light_label": "Light",
+      "hint_place": "Your turn — click a highlighted square to place",
+      "hint_wait": "Waiting for {player}…",
+      "skipped_yours": "You have no valid moves — your turn is skipped",
+      "skipped_opps": "{player} has no valid moves — their turn is skipped",
+      "pieces": "{n} pieces",
+      "how_to_play": "Dark moves first. Players alternate placing one piece per turn on any highlighted square.\nEach placement must flip at least one opponent piece — any straight line (horizontal, vertical, or diagonal) between your new piece and an existing piece of yours flips all opponent pieces in between.\nIf you have no valid move your turn is skipped; if neither player can move the game ends.\nThe player with the most pieces when the board is full (or no moves remain) wins.\nA tie is possible if both end with 32 pieces."
+    }
+  }
+}

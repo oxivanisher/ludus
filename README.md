@@ -15,6 +15,7 @@ Play with anyone, on any device — no accounts, no tracking, no chat.
 | Battleship | 2 | Place your fleet and sink all 10 enemy ships |
 | Mastermind | 2 | Set a secret color code or crack it before guesses run out |
 | Mill | 2 | Place and move pieces to form mills of three — remove opponent pieces to win |
+| Reversi | 2 | Flip your opponent's pieces to claim the board — most pieces wins |
 
 ---
 

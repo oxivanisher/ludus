@@ -1,0 +1,18 @@
+{
+  "games": {
+    "reversi": {
+      "name": "Reversi",
+      "description": "Drehe gegnerische Steine um, um das Feld zu beherrschen. Wer bei vollem Brett die meisten Steine hat, gewinnt.",
+      "you_are_dark": "Du spielst Dunkel",
+      "you_are_light": "Du spielst Hell",
+      "dark_label": "Dunkel",
+      "light_label": "Hell",
+      "hint_place": "Du bist dran — klicke ein markiertes Feld",
+      "hint_wait": "Warte auf {player}…",
+      "skipped_yours": "Du hast keinen gültigen Zug — dein Zug wird übersprungen",
+      "skipped_opps": "{player} hat keinen gültigen Zug — ihr Zug wird übersprungen",
+      "pieces": "{n} Steine",
+      "how_to_play": "Dunkel zieht zuerst. Spieler setzen abwechselnd einen Stein auf ein markiertes Feld.\nJeder Zug muss mindestens einen gegnerischen Stein umdrehen — alle gegnerischen Steine in einer geraden Linie (waagerecht, senkrecht oder diagonal) zwischen dem neuen und einem eigenen Stein werden umgedreht.\nHast du keinen gültigen Zug, wird dein Zug übersprungen; kann keiner mehr ziehen, endet das Spiel.\nWer bei Spielende die meisten Steine hat, gewinnt.\nSollten beide Spieler gleich viele Steine haben, endet das Spiel unentschieden."
+    }
+  }
+}
