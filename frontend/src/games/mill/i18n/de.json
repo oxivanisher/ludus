@@ -1,0 +1,20 @@
+{
+  "games": {
+    "mill": {
+      "name": "Mühle",
+      "description": "Setze und bewege Steine, um Mühlen zu bilden. Entferne gegnerische Steine — wer zuletzt übrig bleibt, gewinnt.",
+      "hint_place_my": "Du bist dran — klicke eine freie Stelle, um einen Stein zu setzen ({n} übrig)",
+      "hint_place_opp": "{player} setzt einen Stein ({n} übrig)…",
+      "hint_select": "Du bist dran — wähle einen deiner Steine zum Ziehen",
+      "hint_move": "Klicke nun wohin du ziehen möchtest — oder wähle einen anderen Stein",
+      "hint_remove_my": "Mühle! Entferne einen Stein von {opponent}",
+      "hint_remove_opp": "{player} hat eine Mühle gebildet — ein Stein wird entfernt…",
+      "flying": "Fliegen — kann überallhin springen!",
+      "player0_label": "Bernstein",
+      "player1_label": "Indigo",
+      "pieces": "{n} Steine",
+      "to_place": "{n} zu setzen",
+      "how_to_play": "Jeder Spieler setzt abwechselnd 9 Steine auf die 24 Schnittpunkte.\nWer eine Mühle bildet (drei in einer Reihe entlang einer Linie), darf einen gegnerischen Stein entfernen — Steine in einer Mühle sind geschützt, außer alle gegnerischen Steine befinden sich in Mühlen.\nSind alle Steine gesetzt, werden Steine entlang der Linien einen Schritt pro Zug gezogen.\nWer nur noch genau 3 Steine hat, darf auf jedes freie Feld springen (Fliegen).\nDu gewinnst, wenn dein Gegner weniger als 3 Steine hat oder keinen gültigen Zug mehr machen kann."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "games": {
+    "mill": {
+      "name": "Mill",
+      "description": "Place and move pieces to form mills of three. Remove opponent pieces — last one standing wins.",
+      "hint_place_my": "Your turn — click an empty point to place a piece ({n} left)",
+      "hint_place_opp": "{player} is placing a piece ({n} left)…",
+      "hint_select": "Your turn — select one of your pieces to move",
+      "hint_move": "Now click where to move — or pick a different piece",
+      "hint_remove_my": "Mill! Remove one of {opponent}'s pieces",
+      "hint_remove_opp": "{player} formed a mill — they must remove one of your pieces…",
+      "flying": "Flying — can jump anywhere!",
+      "player0_label": "Amber",
+      "player1_label": "Indigo",
+      "pieces": "{n} pieces",
+      "to_place": "{n} to place",
+      "how_to_play": "Each player places 9 pieces one at a time on the 24 intersections, taking turns.\nWhenever you complete a mill (three in a row along any line), remove one opponent piece — pieces inside a mill are protected unless all opponent pieces are milled.\nOnce all pieces are placed, players slide pieces along the lines one step per turn.\nA player reduced to exactly 3 pieces may jump to any empty point (flying).\nWin by reducing your opponent to fewer than 3 pieces, or leaving them with no legal move."
+    }
+  }
+}

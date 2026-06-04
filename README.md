@@ -14,6 +14,7 @@ Play with anyone, on any device — no accounts, no tracking, no chat.
 | Connect Four | 2 | Drop pieces into a 7×6 grid — connect four to win |
 | Battleship | 2 | Place your fleet and sink all 10 enemy ships |
 | Mastermind | 2 | Set a secret color code or crack it before guesses run out |
+| Mill | 2 | Place and move pieces to form mills of three — remove opponent pieces to win |
 
 ---
 
