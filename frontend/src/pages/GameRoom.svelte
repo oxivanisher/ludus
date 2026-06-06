@@ -331,12 +331,20 @@
     </p>
   {/if}
 
+  <!-- Game board -->
+  {#if GameComponent}
+    <GameComponent {session} {myUsername} onAction={sendAction} />
+  {:else}
+    <p class="text-gray-500 dark:text-gray-400 text-sm">{$_('game_room.no_ui', { values: { slug: session.game_slug } })}</p>
+  {/if}
+
   <!-- How to play -->
-  <details class="mb-4 group">
-    <summary class="cursor-pointer text-sm text-indigo-600 dark:text-indigo-400 hover:underline list-none flex items-center gap-1">
-      <span class="text-xs">▶</span>
-      <span class="group-open:hidden">{$_('game_room.how_to_play')}</span>
-      <span class="hidden group-open:inline">{$_('game_room.how_to_play')}</span>
+  <details class="mt-4 group">
+    <summary class="cursor-pointer list-none">
+      <span class="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors">
+        <span class="text-xs group-open:rotate-90 transition-transform inline-block">▶</span>
+        {$_('game_room.how_to_play')}
+      </span>
     </summary>
     <ul class="mt-2 text-sm text-gray-600 dark:text-gray-400 space-y-1 list-disc list-inside">
       {#each $_(`games.${session.game_slug}.how_to_play`).split('\n') as rule}
@@ -344,13 +352,6 @@
       {/each}
     </ul>
   </details>
-
-  <!-- Game board -->
-  {#if GameComponent}
-    <GameComponent {session} {myUsername} onAction={sendAction} />
-  {:else}
-    <p class="text-gray-500 dark:text-gray-400 text-sm">{$_('game_room.no_ui', { values: { slug: session.game_slug } })}</p>
-  {/if}
 
   <!-- Forfeit -->
   {#if isParticipant && session.status === "playing"}
