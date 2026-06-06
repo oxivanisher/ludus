@@ -226,10 +226,10 @@
     </div>
   {/if}
 
-  {#if hasPlayedGame() && !isInstalled() && (installState.prompt || isIOS())}
-    <div class="mt-4 flex justify-center">
+  {#if !isInstalled() && (installState.prompt || isIOS())}
+    <div class="mt-4">
       <button
-        class="text-sm text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 flex items-center gap-1.5 transition-colors"
+        class="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors"
         onclick={() => isIOS() ? (installState.iosHintOpen = true) : triggerInstall()}
       >
         <span>📱</span>
