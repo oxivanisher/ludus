@@ -225,18 +225,18 @@
       </button>
     </div>
   {/if}
-{/if}
 
-{#if hasPlayedGame() && !isInstalled() && (installState.prompt || isIOS())}
-  <div class="mt-10 pt-6 border-t border-gray-100 dark:border-gray-800 flex justify-center">
-    <button
-      class="text-sm text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 flex items-center gap-1.5 transition-colors"
-      onclick={() => isIOS() ? (installState.iosHintOpen = true) : triggerInstall()}
-    >
-      <span>📱</span>
-      <span>{$_('install.button')}</span>
-    </button>
-  </div>
+  {#if hasPlayedGame() && !isInstalled() && (installState.prompt || isIOS())}
+    <div class="mt-4 flex justify-center">
+      <button
+        class="text-sm text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 flex items-center gap-1.5 transition-colors"
+        onclick={() => isIOS() ? (installState.iosHintOpen = true) : triggerInstall()}
+      >
+        <span>📱</span>
+        <span>{$_('install.button')}</span>
+      </button>
+    </div>
+  {/if}
 {/if}
 
 {#if stats?.git_commit}
