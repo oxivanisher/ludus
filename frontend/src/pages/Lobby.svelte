@@ -158,7 +158,7 @@
         <div class="grid grid-cols-2 gap-2">
           {#each games as game}
             <button
-              class="p-3 border rounded text-left transition-colors
+              class="p-3 border rounded text-left transition-colors flex flex-col justify-start
                      border-gray-200 hover:border-indigo-400
                      dark:border-gray-600 dark:hover:border-indigo-500
                      {selectedSlug === game.slug
@@ -218,7 +218,7 @@
   {#if hasFinished}
     <div class="mt-8">
       <button
-        class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+        class="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors"
         onclick={onHistory}
       >
         {$_('lobby.past_games_link')}

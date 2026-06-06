@@ -167,7 +167,10 @@
   }
 </script>
 
-<button class="text-sm text-indigo-600 dark:text-indigo-400 mb-4 hover:underline" onclick={onBack}>
+<button
+  class="inline-flex items-center gap-1 text-sm px-3 py-1.5 mb-4 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors"
+  onclick={onBack}
+>
   {$_('game_room.back')}
 </button>
 

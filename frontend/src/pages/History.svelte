@@ -22,7 +22,10 @@
   });
 </script>
 
-<button class="text-sm text-indigo-600 dark:text-indigo-400 mb-6 hover:underline" onclick={onBack}>
+<button
+  class="inline-flex items-center gap-1 text-sm px-3 py-1.5 mb-6 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors"
+  onclick={onBack}
+>
   {$_('history.back')}
 </button>
 
@@ -37,7 +40,7 @@
 {:else if sessions.length === 0}
   <p class="text-gray-500 dark:text-gray-400">{$_('history.empty')}</p>
 {:else}
-  <div class="space-y-3">
+  <div class="grid grid-cols-2 gap-3">
     {#each sessions as session (session.uuid)}
       <GameCard {session} onClick={() => onJoinGame(session.uuid)} />
     {/each}
