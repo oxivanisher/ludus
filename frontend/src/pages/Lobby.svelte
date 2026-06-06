@@ -82,23 +82,6 @@
   }
 </script>
 
-<!-- Platform stats banner -->
-{#if stats}
-  <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8 mt-1">
-    <span class="inline-flex items-center gap-1.5">
-      <span class="relative flex h-2 w-2">
-        {#if stats.active_games > 0}
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-        {/if}
-        <span class="relative inline-flex rounded-full h-2 w-2 {stats.active_games > 0 ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}"></span>
-      </span>
-      {$_('lobby.stats_in_progress', { values: { count: stats.active_games } })}
-    </span>
-    <span class="text-gray-300 dark:text-gray-600">·</span>
-    <span>{$_('lobby.stats_total', { values: { count: stats.total_games } })}</span>
-  </div>
-{/if}
-
 <h1 class="text-2xl font-bold mb-6">{$_('lobby.title')}</h1>
 
 {#if error}
@@ -239,8 +222,21 @@
   {/if}
 {/if}
 
-{#if stats?.git_commit}
-  <p class="mt-6 text-xs text-gray-300 dark:text-gray-700 font-mono">
-    {stats.git_commit.slice(0, 7)}
-  </p>
+{#if stats}
+  <div class="mt-10 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center gap-2 text-xs text-gray-300 dark:text-gray-700">
+    <span class="inline-flex items-center gap-1.5">
+      <span class="relative flex h-1.5 w-1.5">
+        {#if stats.active_games > 0}
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+        {/if}
+        <span class="relative inline-flex rounded-full h-1.5 w-1.5 {stats.active_games > 0 ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'}"></span>
+      </span>
+      {$_('lobby.stats_in_progress', { values: { count: stats.active_games } })}
+    </span>
+    <span>·</span>
+    <span>{$_('lobby.stats_total', { values: { count: stats.total_games } })}</span>
+    {#if stats.git_commit}
+      <span class="ml-auto font-mono">{stats.git_commit.slice(0, 7)}</span>
+    {/if}
+  </div>
 {/if}
