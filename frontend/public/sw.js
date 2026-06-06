@@ -9,13 +9,19 @@ self.addEventListener("push", (event) => {
   }
 
   event.waitUntil(
-    self.registration.showNotification(payload.title ?? "Ludus", {
-      body: payload.body,
-      icon: "/favicon.svg",
-      badge: "/favicon.svg",
-      data: { url: payload.url ?? "/" },
-      tag: payload.url, // collapse multiple notifications for the same game
-      renotify: false,
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+      // If any app window is visible, the user is already looking at it — skip the notification.
+      const appVisible = clients.some((c) => c.visibilityState === "visible");
+      if (appVisible) return;
+
+      return self.registration.showNotification(payload.title ?? "Ludus", {
+        body: payload.body,
+        icon: "/icon-192.png",
+        badge: "/icon-192.png",
+        data: { url: payload.url ?? "/" },
+        tag: payload.url, // collapse multiple notifications for the same game
+        renotify: false,
+      });
     })
   );
 });
