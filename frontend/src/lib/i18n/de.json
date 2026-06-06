@@ -48,7 +48,7 @@
     "create": {
       "title": "Neues Spiel starten",
       "username_label": "Dein Benutzername",
-      "username_placeholder": "Benutzername eingeben",
+      "username_placeholder": "Benutzername ändern",
       "choose_game": "Spiel wählen",
       "public_label": "Öffentliches Spiel – jeder auf diesem Server kann beitreten",
       "vs_computer": "Gegen den Computer spielen",
@@ -74,7 +74,7 @@
     "copied": "Kopiert!",
     "share": "Teilen",
     "share_text": "Spiele {game} mit mir!",
-    "join_placeholder": "Dein Benutzername",
+    "join_placeholder": "Benutzername ändern",
     "join": "Spiel beitreten",
     "joining": "Trete bei…",
     "you_win": "Du gewinnst! 🎉",
