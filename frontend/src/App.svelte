@@ -1,9 +1,10 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { _, locale } from 'svelte-i18n';
   import { setupI18n } from './lib/i18n.js';
   import { handleImportFromUrl, importToken } from "./lib/token.js";
   import { installState } from "./lib/install.svelte.js";
+  import { api } from "./lib/api.js";
   import Lobby from "./pages/Lobby.svelte";
   import GameRoom from "./pages/GameRoom.svelte";
   import History from "./pages/History.svelte";
@@ -16,6 +17,7 @@
   let sessionId = $state(null);
   let showTokenManager = $state(false);
   let pendingImportToken = $state(null);
+  let versionPoller;
 
   function navigate(to, id = null) {
     sessionId = id;
@@ -29,11 +31,42 @@
     localStorage.setItem('ludus_locale', lang);
   }
 
+  onDestroy(() => clearInterval(versionPoller));
+
   onMount(() => {
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       installState.prompt = e;
     });
+
+    // Register SW unconditionally for install prompt + update detection
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then((reg) => {
+        if (navigator.serviceWorker.controller) {
+          reg.addEventListener('updatefound', () => {
+            const sw = reg.installing;
+            sw?.addEventListener('statechange', () => {
+              if (sw.state === 'activated') window.location.reload();
+            });
+          });
+        }
+      });
+    }
+
+    // Poll git_commit every 60s — catches deploys where sw.js itself didn't change
+    let initialCommit = null;
+    api.stats().then((s) => {
+      if (s?.git_commit && s.git_commit !== 'dev') initialCommit = s.git_commit;
+    }).catch(() => {});
+
+    versionPoller = setInterval(async () => {
+      try {
+        const { git_commit } = await api.stats();
+        if (!git_commit || git_commit === 'dev') return;
+        if (initialCommit && git_commit !== initialCommit) { window.location.reload(); return; }
+        if (!initialCommit) initialCommit = git_commit;
+      } catch {}
+    }, 60_000);
 
     const incoming = handleImportFromUrl();
     if (incoming) pendingImportToken = incoming;
