@@ -60,7 +60,14 @@
     "title": "Past Games",
     "back": "← Back to lobby",
     "loading": "Loading…",
-    "empty": "No finished games yet."
+    "empty": "No finished games yet.",
+    "won": "Won",
+    "lost": "Lost",
+    "draw": "Draw",
+    "col_game": "Game",
+    "col_opponent": "Opponent",
+    "col_result": "Result",
+    "col_when": "When"
   },
   "game_room": {
     "back": "← Back to lobby",

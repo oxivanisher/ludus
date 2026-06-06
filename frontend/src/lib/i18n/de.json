@@ -60,7 +60,14 @@
     "title": "Vergangene Spiele",
     "back": "← Zurück zur Lobby",
     "loading": "Lade…",
-    "empty": "Noch keine beendeten Spiele."
+    "empty": "Noch keine beendeten Spiele.",
+    "won": "Gewonnen",
+    "lost": "Verloren",
+    "draw": "Unentschieden",
+    "col_game": "Spiel",
+    "col_opponent": "Gegner",
+    "col_result": "Ergebnis",
+    "col_when": "Wann"
   },
   "game_room": {
     "back": "← Zurück zur Lobby",
