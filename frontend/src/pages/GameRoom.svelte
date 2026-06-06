@@ -357,7 +357,7 @@
     <div class="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800">
       {#if !forfeitPending}
         <button
-          class="text-xs text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+          class="inline-flex items-center gap-1 text-sm px-3 py-1.5 rounded-lg border border-red-200 bg-white text-red-600 hover:bg-red-50 dark:border-red-900 dark:bg-transparent dark:text-red-400 dark:hover:bg-red-900/20 transition-colors"
           onclick={() => { forfeitPending = true; }}
         >
           {$_('game_room.forfeit_game')}
