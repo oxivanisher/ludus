@@ -5,6 +5,7 @@
   import { createGameSocket } from "../lib/ws.js";
   import { subscribeToPush, unsubscribeFromPush, isPushSupported } from "../lib/push.js";
   import { getSavedUsername, saveUsername } from "../lib/username.js";
+  import { markGamePlayed } from "../lib/install.svelte.js";
   import TicTacToe from "../games/TicTacToe.svelte";
   import ConnectFour from "../games/ConnectFour.svelte";
   import Battleship from "../games/Battleship.svelte";
@@ -39,6 +40,10 @@
   let joining = $state(false);
 
   let isParticipant = $derived(session?.my_username !== null && session?.my_username !== undefined);
+
+  $effect(() => {
+    if (session?.status === 'finished' && isParticipant) markGamePlayed();
+  });
 
   let inviteCopied = $state(false);
   let inviteUrl = $derived(session ? `${location.origin}/game/${session.uuid}` : "");

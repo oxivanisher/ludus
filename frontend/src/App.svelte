@@ -3,6 +3,7 @@
   import { _, locale } from 'svelte-i18n';
   import { setupI18n } from './lib/i18n.js';
   import { handleImportFromUrl, importToken } from "./lib/token.js";
+  import { installState } from "./lib/install.svelte.js";
   import Lobby from "./pages/Lobby.svelte";
   import GameRoom from "./pages/GameRoom.svelte";
   import History from "./pages/History.svelte";
@@ -29,6 +30,11 @@
   }
 
   onMount(() => {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      installState.prompt = e;
+    });
+
     const incoming = handleImportFromUrl();
     if (incoming) pendingImportToken = incoming;
 
@@ -122,4 +128,24 @@
 
 {#if showTokenManager}
   <TokenManager onClose={() => { showTokenManager = false; }} />
+{/if}
+
+{#if installState.iosHintOpen}
+  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+  <div class="fixed inset-0 z-50 bg-black/50 flex items-end justify-center p-4"
+       onclick={() => { installState.iosHintOpen = false; }}>
+    <div class="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-sm space-y-4"
+         onclick={(e) => e.stopPropagation()}>
+      <h2 class="font-semibold text-lg">{$_('install.ios_title')}</h2>
+      <ol class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+        <li class="flex gap-3"><span class="font-semibold text-indigo-600 dark:text-indigo-400 shrink-0">1.</span><span>{$_('install.ios_step1')}</span></li>
+        <li class="flex gap-3"><span class="font-semibold text-indigo-600 dark:text-indigo-400 shrink-0">2.</span><span>{$_('install.ios_step2')}</span></li>
+        <li class="flex gap-3"><span class="font-semibold text-indigo-600 dark:text-indigo-400 shrink-0">3.</span><span>{$_('install.ios_step3')}</span></li>
+      </ol>
+      <button
+        class="w-full py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+        onclick={() => { installState.iosHintOpen = false; }}
+      >{$_('install.close')}</button>
+    </div>
+  </div>
 {/if}

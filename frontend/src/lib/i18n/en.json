@@ -111,6 +111,14 @@
     "hours_ago": "{n}h ago",
     "days_ago": "{n}d ago"
   },
+  "install": {
+    "button": "Add to home screen",
+    "ios_title": "Add Ludus to your home screen",
+    "ios_step1": "Tap the Share button (⬆) at the bottom of Safari",
+    "ios_step2": "Scroll down and tap \"Add to Home Screen\"",
+    "ios_step3": "Tap \"Add\" to confirm",
+    "close": "Got it"
+  },
   "token_manager": {
     "title": "Player Token",
     "description": "Your token identifies your games on this device. Export it to continue on another device — no account needed.",

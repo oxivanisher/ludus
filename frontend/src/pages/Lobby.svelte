@@ -3,6 +3,7 @@
   import { _ } from 'svelte-i18n';
   import { api } from "../lib/api.js";
   import { getSavedUsername, saveUsername } from "../lib/username.js";
+  import { installState, isIOS, isInstalled, hasPlayedGame, triggerInstall } from "../lib/install.svelte.js";
   import GameCard from "../components/GameCard.svelte";
   import GameThumbnail from "../components/GameThumbnail.svelte";
 
@@ -226,8 +227,20 @@
   {/if}
 {/if}
 
+{#if hasPlayedGame() && !isInstalled() && (installState.prompt || isIOS())}
+  <div class="mt-10 pt-6 border-t border-gray-100 dark:border-gray-800 flex justify-center">
+    <button
+      class="text-sm text-gray-400 dark:text-gray-600 hover:text-indigo-500 dark:hover:text-indigo-400 flex items-center gap-1.5 transition-colors"
+      onclick={() => isIOS() ? (installState.iosHintOpen = true) : triggerInstall()}
+    >
+      <span>📱</span>
+      <span>{$_('install.button')}</span>
+    </button>
+  </div>
+{/if}
+
 {#if stats?.git_commit}
-  <p class="mt-16 text-xs text-gray-300 dark:text-gray-700 font-mono">
+  <p class="mt-6 text-xs text-gray-300 dark:text-gray-700 font-mono">
     {stats.git_commit.slice(0, 7)}
   </p>
 {/if}

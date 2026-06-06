@@ -111,6 +111,14 @@
     "hours_ago": "vor {n}h",
     "days_ago": "vor {n}d"
   },
+  "install": {
+    "button": "Zum Startbildschirm hinzufügen",
+    "ios_title": "Ludus zum Startbildschirm hinzufügen",
+    "ios_step1": "Tippe auf das Teilen-Symbol (⬆) am unteren Rand von Safari",
+    "ios_step2": "Scrolle nach unten und tippe auf «Zum Home-Bildschirm»",
+    "ios_step3": "Tippe auf «Hinzufügen» zum Bestätigen",
+    "close": "Verstanden"
+  },
   "token_manager": {
     "title": "Spieler-Token",
     "description": "Dein Token identifiziert deine Spiele auf diesem Gerät. Exportiere ihn, um auf einem anderen Gerät weiterzuspielen – kein Konto nötig.",
