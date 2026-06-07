@@ -51,8 +51,8 @@
       "username_placeholder": "Change your username",
       "choose_game": "Choose game",
       "vs_computer": "Play against the computer",
-      "submit": "Create & Get Invite Link",
-      "submitting": "Creating…"
+      "submit": "Start Game",
+      "submitting": "Starting…"
     }
   },
   "history": {

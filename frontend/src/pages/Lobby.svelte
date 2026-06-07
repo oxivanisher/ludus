@@ -127,20 +127,6 @@
       </div>
 
       <div>
-        <label for="new-game-username" class="block text-sm text-gray-600 dark:text-gray-400 mb-1">
-          {$_('lobby.create.username_label')}
-        </label>
-        <input
-          id="new-game-username"
-          class="w-full border rounded px-3 py-2
-                 border-gray-300 bg-white text-gray-900 placeholder-gray-400
-                 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-500"
-          placeholder={$_('lobby.create.username_placeholder')}
-          bind:value={username}
-        />
-      </div>
-
-      <div>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">{$_('lobby.create.choose_game')}</p>
         <div class="grid grid-cols-2 gap-2">
           {#each games as game}
@@ -171,6 +157,20 @@
           {$_('lobby.create.vs_computer')}
         </label>
       {/if}
+
+      <div>
+        <label for="new-game-username" class="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+          {$_('lobby.create.username_label')}
+        </label>
+        <input
+          id="new-game-username"
+          class="w-full border rounded px-3 py-2
+                 border-gray-300 bg-white text-gray-900 placeholder-gray-400
+                 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-500"
+          placeholder={$_('lobby.create.username_placeholder')}
+          bind:value={username}
+        />
+      </div>
 
       <button
         class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
