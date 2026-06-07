@@ -108,8 +108,7 @@ async def create_session(
         pipe.sadd(PUBLIC_KEY, session_id)
     await pipe.execute()
 
-    visibility = "vs_computer" if vs_computer else ("public" if public else "private")
-    metrics.sessions_created.labels(game=game_slug, visibility=visibility).inc()
+    metrics.sessions_created.labels(game=game_slug).inc()
     metrics.sessions_waiting.inc()
 
     return session
@@ -188,7 +187,8 @@ async def join_session(session_id: str, username: str, player_token: str) -> dic
     await pipe.execute()
 
     if game_starting:
-        metrics.sessions_started.labels(game=session["game_slug"]).inc()
+        visibility = "vs_computer" if session.get("vs_computer") else ("public" if session.get("public") else "private")
+        metrics.sessions_started.labels(game=session["game_slug"], visibility=visibility).inc()
         metrics.sessions_waiting.dec()
         metrics.sessions_active.inc()
 
@@ -409,7 +409,34 @@ async def create_rematch(session_id: str, player_token: str) -> tuple[dict, dict
 
     game_slug = session["game_slug"]
     metrics.sessions_rematched.labels(game=game_slug).inc()
-    metrics.sessions_started.labels(game=game_slug).inc()
+    visibility = "vs_computer" if new_session.get("vs_computer") else "private"
+    metrics.sessions_started.labels(game=game_slug, visibility=visibility).inc()
     metrics.sessions_active.inc()
 
     return session, new_session
+
+
+async def set_session_visibility(session_id: str, public: bool, player_token: str) -> dict:
+    session = await get_session(session_id)
+    if session is None:
+        raise ValueError("Session not found")
+    if session["status"] != "waiting":
+        raise ValueError("Cannot change visibility after the game has started")
+    if session["players"][0]["token"] != player_token:
+        raise ValueError("Only the game creator can change visibility")
+
+    r = await get_redis()
+    if public and not session.get("public"):
+        public_count = await r.scard(PUBLIC_KEY)
+        if public_count >= settings.max_public_sessions:
+            raise ValueError("Too many open public games right now. Please wait for one to finish or keep your game private.")
+
+    session["public"] = public
+    await save_session(session)
+
+    if public:
+        await r.sadd(PUBLIC_KEY, session_id)
+    else:
+        await r.srem(PUBLIC_KEY, session_id)
+
+    return session

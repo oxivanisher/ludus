@@ -50,7 +50,6 @@
       "username_label": "Dein Benutzername",
       "username_placeholder": "Benutzername ändern",
       "choose_game": "Spiel wählen",
-      "public_label": "Öffentliches Spiel – jeder auf diesem Server kann beitreten",
       "vs_computer": "Gegen den Computer spielen",
       "submit": "Erstellen & Einladungslink erhalten",
       "submitting": "Erstelle…"
@@ -96,6 +95,8 @@
     "push_off": "🔕 Benachrichtigen",
     "push_on_title": "Benachrichtigungen an – zum Deaktivieren klicken",
     "push_off_title": "Zugbenachrichtigungen aktivieren",
+    "visibility_public": "Öffentlich – jeder auf diesem Server kann beitreten",
+    "visibility_private": "Privat – nur per Einladung",
     "cancel_game": "Spiel abbrechen",
     "cancelling": "Wird abgebrochen…",
     "forfeit_game": "Aufgeben",

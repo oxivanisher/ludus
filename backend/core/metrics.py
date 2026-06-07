@@ -14,13 +14,13 @@ from prometheus_client import Counter, Gauge, Histogram
 sessions_created = Counter(
     "ludus_sessions_created_total",
     "Sessions created",
-    ["game", "visibility"],  # visibility: public | private | vs_computer
+    ["game"],
 )
 
 sessions_started = Counter(
     "ludus_sessions_started_total",
     "Sessions that reached playing state (all players joined)",
-    ["game"],
+    ["game", "visibility"],  # visibility: public | private | vs_computer
 )
 
 sessions_finished = Counter(

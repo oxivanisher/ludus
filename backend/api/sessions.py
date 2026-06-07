@@ -12,6 +12,7 @@ from models.schemas import (
     GameInfo,
     JoinSessionRequest,
     SessionResponse,
+    SetVisibilityRequest,
     StatsResponse,
 )
 
@@ -199,6 +200,28 @@ async def forfeit_session(
     token = _require_token(x_player_token)
     try:
         session = await session_store.forfeit_session(session_id, token)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    for tok, ws in connections.get_sockets(session_id).items():
+        viewer = SessionResponse.from_session(session, tok)
+        try:
+            await ws.send_text(json.dumps({"type": "state", "session": viewer.model_dump()}))
+        except Exception:
+            pass
+
+    return SessionResponse.from_session(session, token)
+
+
+@router.patch("/sessions/{session_id}/visibility", response_model=SessionResponse)
+async def set_visibility(
+    session_id: str,
+    body: SetVisibilityRequest,
+    x_player_token: str | None = Header(default=None),
+):
+    token = _require_token(x_player_token)
+    try:
+        session = await session_store.set_session_visibility(session_id, body.public, token)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 

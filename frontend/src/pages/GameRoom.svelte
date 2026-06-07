@@ -121,6 +121,20 @@
   let isOwner = $derived(session?.players[0]?.username === myUsername);
 
   let cancelling = $state(false);
+  let togglingVisibility = $state(false);
+
+  async function toggleVisibility() {
+    togglingVisibility = true;
+    try {
+      const newPublic = !session.public;
+      session = await api.setVisibility(sessionId, newPublic);
+      localStorage.setItem('ludus_public_game', String(newPublic));
+    } catch (e) {
+      error = e.message;
+    } finally {
+      togglingVisibility = false;
+    }
+  }
 
   async function cancelGame() {
     cancelling = true;
@@ -273,6 +287,16 @@
       {/if}
 
       {#if isOwner}
+        <button
+          class="px-3 py-1 rounded text-sm transition-colors disabled:opacity-50
+                 {session.public
+                   ? 'bg-green-100 border border-green-300 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:border-green-700 dark:text-green-300 dark:hover:bg-green-900/50'
+                   : 'bg-gray-100 border border-gray-300 text-gray-600 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600'}"
+          disabled={togglingVisibility}
+          onclick={toggleVisibility}
+        >
+          {session.public ? $_('game_room.visibility_public') : $_('game_room.visibility_private')}
+        </button>
         <div class="pt-1">
           <button
             class="px-3 py-1 bg-red-600 text-white rounded text-sm disabled:opacity-50 hover:bg-red-700"

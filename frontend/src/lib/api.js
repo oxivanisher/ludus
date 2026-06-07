@@ -46,6 +46,12 @@ export const api = {
   rematch: (id) =>
     request(`/api/sessions/${id}/rematch`, { method: "POST" }),
 
+  setVisibility: (id, public_game) =>
+    request(`/api/sessions/${id}/visibility`, {
+      method: "PATCH",
+      body: JSON.stringify({ public: public_game }),
+    }),
+
   cancelSession: (id) =>
     request(`/api/sessions/${id}`, { method: "DELETE" }),
 };

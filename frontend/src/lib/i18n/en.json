@@ -50,7 +50,6 @@
       "username_label": "Your username",
       "username_placeholder": "Change your username",
       "choose_game": "Choose game",
-      "public_label": "Public game — anyone on this server can join",
       "vs_computer": "Play against the computer",
       "submit": "Create & Get Invite Link",
       "submitting": "Creating…"
@@ -96,6 +95,8 @@
     "push_off": "🔕 Notify me",
     "push_on_title": "Notifications on — click to disable",
     "push_off_title": "Enable turn notifications",
+    "visibility_public": "Public — anyone on this server can join",
+    "visibility_private": "Private — invite only",
     "cancel_game": "Cancel game",
     "cancelling": "Cancelling…",
     "forfeit_game": "Forfeit game",

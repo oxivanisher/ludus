@@ -19,8 +19,12 @@
   let showNewGame = $state(false);
   let selectedSlug = $state("");
   let username = $state(getSavedUsername());
-  let isPublic = $state(false);
   let vsComputer = $state(false);
+
+  function getPublicPref() {
+    const stored = localStorage.getItem('ludus_public_game');
+    return stored === null ? true : stored === 'true';
+  }
   let creating = $state(false);
 
   const selectedGame = $derived(games.find(g => g.slug === selectedSlug) ?? null);
@@ -72,7 +76,7 @@
     try {
       const trimmed = username.trim();
       saveUsername(trimmed);
-      const session = await api.createSession(selectedSlug, trimmed, isPublic, vsComputer);
+      const session = await api.createSession(selectedSlug, trimmed, vsComputer ? false : getPublicPref(), vsComputer);
       onJoinGame(session.uuid);
     } catch (e) {
       error = e.message;
@@ -163,15 +167,8 @@
 
       {#if selectedGame?.supports_solo}
         <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer select-none">
-          <input type="checkbox" class="rounded" bind:checked={vsComputer} onchange={() => { if (vsComputer) isPublic = false; }} />
+          <input type="checkbox" class="rounded" bind:checked={vsComputer} />
           {$_('lobby.create.vs_computer')}
-        </label>
-      {/if}
-
-      {#if !vsComputer}
-        <label class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer select-none">
-          <input type="checkbox" class="rounded" bind:checked={isPublic} />
-          {$_('lobby.create.public_label')}
         </label>
       {/if}
 

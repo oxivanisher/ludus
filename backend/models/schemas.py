@@ -32,6 +32,10 @@ class ActionRequest(BaseModel):
     action: dict
 
 
+class SetVisibilityRequest(BaseModel):
+    public: bool
+
+
 class PlayerView(BaseModel):
     username: str
 
