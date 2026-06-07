@@ -243,9 +243,9 @@
       {#if isParticipant}
       <div>
         <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{$_('game_room.invite_link')}</p>
-        <div class="flex gap-2">
+        <div class="flex flex-wrap gap-2">
           <input
-            class="flex-1 border rounded px-2 py-1 text-sm font-mono bg-white
+            class="flex-1 min-w-0 border rounded px-2 py-1 text-sm font-mono bg-white
                    dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
             readonly
             value={inviteUrl}
