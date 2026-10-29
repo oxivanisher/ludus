@@ -26,6 +26,14 @@
       "If you clear your browser storage, the token is gone and your games will no longer be visible on that device.",
       "You can export your token as a QR code or text and import it on another device to continue your games — tap \"My Token\" in the top bar."
     ],
+    "external_title": "External Resources",
+    "external_body": "Ludus does not load anything from third-party servers. Everything your browser needs is bundled into the app and served by this instance itself.",
+    "external_points": [
+      "No CDNs, web fonts, analytics or tracking scripts.",
+      "The open-source libraries Ludus uses (such as Svelte and a QR code generator) are built into the app and delivered from this server.",
+      "Push notifications are optional and only active if you allow them. Like all web push, they are delivered through your browser vendor's push service (e.g. Google or Mozilla). The content is encrypted — the push service only sees that a notification was sent.",
+      "The GitHub link on this page is a plain link — nothing is loaded from GitHub unless you click it."
+    ],
     "selfhost_title": "Self-Hosting",
     "selfhost_body": "Ludus is open source and designed to be self-hosted. You can run your own instance for your friends or family. The source code and setup instructions are available on GitHub:",
     "selfhost_github": "github.com/oxivanisher/ludus"

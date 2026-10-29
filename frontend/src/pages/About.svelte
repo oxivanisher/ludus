@@ -49,6 +49,20 @@
     </ul>
   </section>
 
+  <!-- External resources -->
+  <section class="flex flex-col gap-2">
+    <h2 class="text-lg font-semibold">{$_('about.external_title')}</h2>
+    <p class="text-gray-700 dark:text-gray-300 leading-relaxed">{$_('about.external_body')}</p>
+    <ul class="flex flex-col gap-1.5 mt-1">
+      {#each $_('about.external_points') as point}
+        <li class="flex gap-2 text-gray-700 dark:text-gray-300 leading-relaxed">
+          <span class="text-gray-400 dark:text-gray-500 mt-0.5 shrink-0">•</span>
+          <span>{point}</span>
+        </li>
+      {/each}
+    </ul>
+  </section>
+
   <!-- Self-hosting -->
   <section class="flex flex-col gap-2">
     <h2 class="text-lg font-semibold">{$_('about.selfhost_title')}</h2>
