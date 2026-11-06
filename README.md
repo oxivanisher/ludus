@@ -214,4 +214,4 @@ Please do not add: accounts, user tracking, chat, or features that would comprom
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).
