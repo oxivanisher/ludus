@@ -1,5 +1,8 @@
 {
   "nav": {
+    "theme_auto": "Theme: system",
+    "theme_light": "Theme: light",
+    "theme_dark": "Theme: dark",
     "my_token": "My Token",
     "about": "About"
   },

@@ -4,6 +4,7 @@
   import { setupI18n } from './lib/i18n.js';
   import { handleImportFromUrl, importToken } from "./lib/token.js";
   import { installState } from "./lib/install.svelte.js";
+  import { themeState, cycleTheme } from "./lib/theme.svelte.js";
   import { api } from "./lib/api.js";
   import Lobby from "./pages/Lobby.svelte";
   import GameRoom from "./pages/GameRoom.svelte";
@@ -129,6 +130,24 @@
         onclick={() => setLocale('de')}
       >DE</button>
     </div>
+    <button
+      class="p-1 rounded opacity-80 hover:opacity-100 hover:bg-white/10 transition-colors"
+      onclick={cycleTheme}
+      title={$_(`nav.theme_${themeState.mode}`)}
+      aria-label={$_(`nav.theme_${themeState.mode}`)}
+    >
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        {#if themeState.mode === 'light'}
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        {:else if themeState.mode === 'dark'}
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        {:else}
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" />
+        {/if}
+      </svg>
+    </button>
     <button
       class="text-sm underline opacity-80 hover:opacity-100"
       onclick={() => navigate("about")}

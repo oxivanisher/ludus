@@ -1,5 +1,8 @@
 {
   "nav": {
+    "theme_auto": "Design: System",
+    "theme_light": "Design: Hell",
+    "theme_dark": "Design: Dunkel",
     "my_token": "Mein Token",
     "about": "Über"
   },
